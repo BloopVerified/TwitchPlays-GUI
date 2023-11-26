@@ -1,4 +1,4 @@
-# TwitchPlays
+# TwitchPlays #WIP#
 These are the two Python files I use that allows Twitch Chat or Youtube Chat to control your keyboard or mouse to play a game. You are welcome to use or adapt this code for your own content.
 
 To run the code you will need to install Python 3.12.  
