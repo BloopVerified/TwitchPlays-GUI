@@ -20,7 +20,7 @@ This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, 
 
 # Latest Feature  
 #Control View On Minecraft  
-#Screen Limit on First Screen(1920x1080) Note: Prevent the mouse and keyboard from trying or moving beyond the first screen on your PC
+#Screen Limit on First Screen(1920x1080) Note: Prevent the mouse and keyboard from typing or moving beyond the first screen on your PC
 #Colored prompts  
 
 # Future Feature Coming Soon  
