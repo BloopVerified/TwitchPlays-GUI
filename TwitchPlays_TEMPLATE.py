@@ -1,123 +1,183 @@
 import concurrent.futures
 import random
+import TwitchPlays_Connection
+import threading as threading
 import keyboard
+import time
+import tkinter as Tk
+from tkinter import *
+import mttkinter as mtTkinter
+from mttkinter import *
 import pydirectinput
 import pyautogui
-import TwitchPlays_Connection
-from TwitchPlays_KeyCodes import *
+import mouse
 
-##################### GAME VARIABLES #####################
+def backTrackAccount():
+    platform.destroy()
+    global previousTab
+    previousTab -= 1
+    global TWITCH_CHANNEL
+    TWITCH_CHANNEL = ''
+    global STREAMING_ON_TWITCH
+    STREAMING_ON_TWITCH =  False
+    global YOUTUBE_CHANNEL_ID
+    YOUTUBE_CHANNEL_ID = ''
+    global YOUTUBE_STREAM_URL
+    YOUTUBE_STREAM_URL = None
+    global twitchActive
+    twitchActive = False
+    global youtubeActive
+    youtubeActive = False
+    
 
-# Replace this with your Twitch username. Must be all lowercase.
-TWITCH_CHANNEL = 'dougdougw' 
+def update():
+    messageRelayOne.config(text=backMessageFour)
+    messageRelayTwo.config(text=backMessageThree)
+    messageRelayThree.config(text=backMessageTwo)
+    messageRelayFour.config(text=backMessageOne)
+    start.after(1000, update)
 
-# If streaming on Youtube, set this to False
-STREAMING_ON_TWITCH = True
 
-# If you're streaming on Youtube, replace this with your Youtube's Channel ID
-# Find this by clicking your Youtube profile pic -> Settings -> Advanced Settings
-YOUTUBE_CHANNEL_ID = "YOUTUBE_CHANNEL_ID_HERE" 
+def updateClear():
+    global backMessageFour, backMessageThree, backMessageTwo, backMessageOne
+    backMessageFour = ''
+    backMessageThree = ''
+    backMessageTwo = ''
+    backMessageOne = ''
+    start.after(1000, updateClear)
 
-# If you're using an Unlisted stream to test on Youtube, replace "None" below with your stream's URL in quotes.
-# Otherwise you can leave this as "None"
-YOUTUBE_STREAM_URL = None
 
-##################### MESSAGE QUEUE VARIABLES #####################
+def backTrackPlatform():
+    game.destroy()
+    global previousTab
+    previousTab -= 1
+    
 
-# MESSAGE_RATE controls how fast we process incoming Twitch Chat messages. It's the number of seconds it will take to handle all messages in the queue.
-# This is used because Twitch delivers messages in "batches", rather than one at a time. So we process the messages over MESSAGE_RATE duration, rather than processing the entire batch at once.
-# A smaller number means we go through the message queue faster, but we will run out of messages faster and activity might "stagnate" while waiting for a new batch. 
-# A higher number means we go through the queue slower, and messages are more evenly spread out, but delay from the viewers' perspective is higher.
-# You can set this to 0 to disable the queue and handle all messages immediately. However, then the wait before another "batch" of messages is more noticeable.
-MESSAGE_RATE = 0.5
-# MAX_QUEUE_LENGTH limits the number of commands that will be processed in a given "batch" of messages. 
-# e.g. if you get a batch of 50 messages, you can choose to only process the first 10 of them and ignore the others.
-# This is helpful for games where too many inputs at once can actually hinder the gameplay.
-# Setting to ~50 is good for total chaos, ~5-10 is good for 2D platformers
-MAX_QUEUE_LENGTH = 20
-MAX_WORKERS = 100 # Maximum number of threads you can process at a time 
+def minecraftSetting():
+    global gamesetting
+    gamesetting = 0
+    global previousTab
+    previousTab = 3
+    game.destroy()
 
-last_time = time.time()
-message_queue = []
-thread_pool = concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS)
-active_tasks = []
-pyautogui.FAILSAFE = False
+def endProgram():
+    global previousTab
+    global t
+    t=''
+    if(t == ''):
+        updateClear()
+    previousTab -= 1
+    start.destroy()
 
-##########################################################
+def twitch_Button():
+    global previousTab
+    global twitchActive
+    previousTab = 1
+    twitchActive = True
+    web.destroy()
 
-# Count down before starting, so you have time to load up the game
-countdown = 5
-while countdown > 0:
-    print(countdown)
-    countdown -= 1
-    time.sleep(1)
+def youtube_Button():
+    global previousTab
+    global youtubeActive
+    previousTab = 1
+    youtubeActive = True
+    web.destroy()
 
-if STREAMING_ON_TWITCH:
-    t = TwitchPlays_Connection.Twitch()
-    t.twitch_connect(TWITCH_CHANNEL)
-else:
-    t = TwitchPlays_Connection.YouTube()
-    t.youtube_connect(YOUTUBE_CHANNEL_ID, YOUTUBE_STREAM_URL)
+def close_window(eventLeave = None):
+    exit();
 
 def handle_message(message):
     try:
         msg = message['message'].lower()
         username = message['username'].lower()
 
-        print("Got this message from " + username + ": " + msg)
+        global backMessageFour,backMessageThree,backMessageTwo,backMessageOne
+        backMessageFour= backMessageThree
+        backMessageThree= backMessageTwo
+        backMessageTwo= backMessageOne
+        backMessageOne = "Got this message from " + username + ": " + msg
 
-        # Now that you have a chat message, this is where you add your game logic.
-        # Use the "HoldKey(KEYCODE)" function to permanently press and hold down a key.
-        # Use the "ReleaseKey(KEYCODE)" function to release a specific keyboard key.
-        # Use the "HoldAndReleaseKey(KEYCODE, SECONDS)" function press down a key for X seconds, then release it.
-        # Use the pydirectinput library to press or move the mouse
-
+        
         # I've added some example videogame logic code below:
-
         ###################################
-        # Example GTA V Code 
+        # Example Minecraft Code Sample
         ###################################
-
-        # If the chat message is "left", then hold down the A key for 2 seconds
-        if msg == "left": 
-            HoldAndReleaseKey(A, 2)
-
-        # If the chat message is "right", then hold down the D key for 2 seconds
-        if msg == "right": 
-            HoldAndReleaseKey(D, 2)
-
-        # If message is "drive", then permanently hold down the W key
-        if msg == "drive": 
-            ReleaseKey(S) #release brake key first
-            HoldKey(W) #start permanently driving
-
-        # If message is "reverse", then permanently hold down the S key
-        if msg == "reverse": 
-            ReleaseKey(W) #release drive key first
-            HoldKey(S) #start permanently reversing
-
-        # Release both the "drive" and "reverse" keys
-        if msg == "stop": 
-            ReleaseKey(W)
-            ReleaseKey(S)
-
-        # Press the spacebar for 0.7 seconds
-        if msg == "brake": 
-            HoldAndReleaseKey(SPACE, 0.7)
-
-        # Press the left mouse button down for 1 second, then release it
-        if msg == "shoot": 
-            pydirectinput.mouseDown(button="left")
-            time.sleep(1)
-            pydirectinput.mouseUp(button="left")
-
-        # Move the mouse up by 30 pixels
-        if msg == "aim up":
-            pydirectinput.moveRel(0, -30, relative=True)
-
-        # Move the mouse right by 200 pixels
-        if msg == "aim right":
-            pydirectinput.moveRel(200, 0, relative=True)
+        if(gamesetting == 0 and previousTab == 3):
+            if(msg.lower() == 'right'):
+                keyboard.press("d")
+                time.sleep(1)
+                keyboard.release("d")
+            elif(msg.lower() == 'left'):
+                keyboard.press("a")
+                time.sleep(1)
+                keyboard.release("a")
+            elif(msg.lower() == 'forward'):
+                keyboard.press("w")
+                time.sleep(1)
+                keyboard.release("w")
+            elif(msg.lower() == 'back'):
+                keyboard.press("s")
+                time.sleep(1)
+                keyboard.release("s")
+            elif(msg.lower() == 'space'):
+                pydirectinput.press('space')
+                time.sleep(0)
+            elif(msg.lower() == '1'):
+                keyboard.press("1")
+                time.sleep(0)
+                keyboard.release("1")
+            elif(msg.lower() == '2'):
+                keyboard.press("2")
+                time.sleep(0)
+                keyboard.release("2")
+            elif(msg.lower() == '3'):
+                keyboard.press("3")
+                time.sleep(0)
+                keyboard.release("3")
+            elif(msg.lower() == '4'):
+                keyboard.press("4")
+                time.sleep(0)
+                keyboard.release("4")
+            elif(msg.lower() == '5'):
+                keyboard.press("5")
+                time.sleep(0)
+                keyboard.release("5")
+            elif(msg.lower() == '6'):
+                keyboard.press("6")
+                time.sleep(0)
+                keyboard.release("6")
+            elif(msg.lower() == '7'):
+                keyboard.press("7")
+                time.sleep(0)
+                keyboard.release("7")
+            elif(msg.lower() == '8'):
+                keyboard.press("8")
+                time.sleep(0)
+                keyboard.release("8")
+            elif(msg.lower() == '9'):
+                keyboard.press("9")
+                time.sleep(0)
+                keyboard.release("9")
+            elif(msg.lower() == 'hand2'):
+                keyboard.press("f")
+                time.sleep(0)
+                keyboard.release("f")
+            elif(msg.lower() == 'turn right'):
+                mouse.move(45, 0, False, .2)
+            elif(msg.lower() == 'turn left'):
+                mouse.move(-45, 0, False, .2)
+            elif(msg.lower() == 'turn up'):
+                mouse.move(0, -45, False, .2)
+            elif(msg.lower() == 'turn down'):
+                mouse.move(0, 45, False, .2)
+            elif(msg.lower() == 'hit'):
+                mouse.press("left")
+                time.sleep(0)
+                mouse.release("left")
+            elif(msg.lower() == 'place'):
+                mouse.press("right")
+                time.sleep(0)
+                mouse.release("right")
 
         ####################################
         ####################################
@@ -126,40 +186,289 @@ def handle_message(message):
         print("Encountered exception: " + str(e))
 
 
-while True:
 
-    active_tasks = [t for t in active_tasks if not t.done()]
 
-    #Check for new messages
-    new_messages = t.twitch_receive_messages();
-    if new_messages:
-        message_queue += new_messages; # New messages are added to the back of the queue
-        message_queue = message_queue[-MAX_QUEUE_LENGTH:] # Shorten the queue to only the most recent X messages
 
-    messages_to_handle = []
-    if not message_queue:
-        # No messages in the queue
-        last_time = time.time()
-    else:
-        # Determine how many messages we should handle now
-        r = 1 if MESSAGE_RATE == 0 else (time.time() - last_time) / MESSAGE_RATE
-        n = int(r * len(message_queue))
-        if n > 0:
-            # Pop the messages we want off the front of the queue
-            messages_to_handle = message_queue[0:n]
-            del message_queue[0:n]
-            last_time = time.time();
 
-    # If user presses Shift+Backspace, automatically end the program
-    if keyboard.is_pressed('shift+backspace'):
-        exit()
 
-    if not messages_to_handle:
-        continue
-    else:
-        for message in messages_to_handle:
-            if len(active_tasks) <= MAX_WORKERS:
-                active_tasks.append(thread_pool.submit(handle_message, message))
-            else:
-                print(f'WARNING: active tasks ({len(active_tasks)}) exceeds number of workers ({MAX_WORKERS}). ({len(message_queue)} messages in the queue)')
- 
+##################### GAME VARIABLES #####################
+def WebSite():
+    # Replace this with your Twitch username. Must be all lowercase.
+    global TWITCH_CHANNEL
+    TWITCH_CHANNEL = ''
+    global STREAMING_ON_TWITCH
+    STREAMING_ON_TWITCH =  False
+    global YOUTUBE_CHANNEL_ID
+    YOUTUBE_CHANNEL_ID = ''
+    global YOUTUBE_STREAM_URL
+    YOUTUBE_STREAM_URL = None
+    global previousTab
+    if(youtubeActive == True):
+        usernameAccess = username.get()
+        channelURL = youtubeURL.get()
+    if(twitchActive == True):
+        usernameAccess = username.get()
+    if(twitchActive == True):
+        TWITCH_CHANNEL = usernameAccess 
+
+        # If streaming on Youtube, set this to False
+        STREAMING_ON_TWITCH = twitchActive
+
+    # If you're streaming on Youtube, replace this with your Youtube's Channel ID
+    # Find this by clicking your Youtube profile pic -> Settings -> Advanced Settings
+    if(youtubeActive == True):
+        YOUTUBE_CHANNEL_ID = usernameAccess
+
+        # If you're using an Unlisted stream to test on Youtube, replace "None" below with your stream's URL in quotes.
+        # Otherwise you can leave this as "None"
+        YOUTUBE_STREAM_URL = channelURL
+    if(YOUTUBE_CHANNEL_ID != None and youtubeActive == True):
+        if(usernameAccess != '' and channelURL !=  ''):
+            previousTab = 2
+            platform.destroy()
+    if(STREAMING_ON_TWITCH == True and twitchActive == True):
+        if(usernameAccess != ''):
+            previousTab = 2
+            platform.destroy()
+    
+    ##################### MESSAGE QUEUE VARIABLES #####################
+
+def thread():
+    global t1
+    t1 = threading.Thread(target=Program)
+    t1.start()
+
+def Program(eventRun=None):
+    global previousTab
+    global t
+    # MESSAGE_RATE controls how fast we process incoming Twitch Chat messages. It's the number of seconds it will take to handle all messages in the queue.
+    # This is used because Twitch delivers messages in "batches", rather than one at a time. So we process the messages over MESSAGE_RATE duration, rather than processing the entire batch at once.
+    # A smaller number means we go through the message queue faster, but we will run out of messages faster and activity might "stagnate" while waiting for a new batch. 
+    # A higher number means we go through the queue slower, and messages are more evenly spread out, but delay from the viewers' perspective is higher.
+    # You can set this to 0 to disable the queue and handle all messages immediately. However, then the wait before another "batch" of messages is more noticeable.
+    MESSAGE_RATE = 0.5
+    # MAX_QUEUE_LENGTH limits the number of commands that will be processed in a given "batch" of messages. 
+    # e.g. if you get a batch of 50 messages, you can choose to only process the first 10 of them and ignore the others.
+    # This is helpful for games where too many inputs at once can actually hinder the gameplay.
+    # Setting to ~50 is good for total chaos, ~5-10 is good for 2D platformers
+    MAX_QUEUE_LENGTH = 20
+    MAX_WORKERS = 100 # Maximum number of threads you can process at a time 
+
+    last_time = time.time()
+    message_queue = []
+    thread_pool = concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS)
+    active_tasks = []
+    pyautogui.FAILSAFE = False
+
+    ##########################################################
+
+    # Count down before starting, so you have time to load up the game
+    countdown = 5
+    while countdown > 0:
+        print(countdown)
+        countdown -= 1
+        time.sleep(1)
+
+    if (STREAMING_ON_TWITCH and previousTab == 3):
+        t = TwitchPlays_Connection.Twitch()
+        t.twitch_connect(TWITCH_CHANNEL)
+    elif(previousTab == 3):
+        t = TwitchPlays_Connection.YouTube()
+        t.youtube_connect(YOUTUBE_CHANNEL_ID, YOUTUBE_STREAM_URL)
+
+
+    while True:
+
+        active_tasks = [t for t in active_tasks if not t.done()]
+
+        #Check for new messages
+        new_messages = t.twitch_receive_messages();
+        if new_messages:
+            message_queue += new_messages; # New messages are added to the back of the queue
+            message_queue = message_queue[-MAX_QUEUE_LENGTH:] # Shorten the queue to only the most recent X messages
+
+        messages_to_handle = []
+        if not message_queue:
+            # No messages in the queue
+            last_time = time.time()
+        else:
+            # Determine how many messages we should handle now
+            r = 1 if MESSAGE_RATE == 0 else (time.time() - last_time) / MESSAGE_RATE
+            n = int(r * len(message_queue))
+            if n > 0:
+                # Pop the messages we want off the front of the queue
+                messages_to_handle = message_queue[0:n]
+                del message_queue[0:n]
+                last_time = time.time();
+
+        # If user presses Shift+Backspace, automatically end the program
+        if keyboard.is_pressed('shift+backspace'):
+            exit()
+
+        if not messages_to_handle:
+            continue
+        else:
+            for message in messages_to_handle:
+                if len(active_tasks) <= MAX_WORKERS:
+                    active_tasks.append(thread_pool.submit(handle_message, message))
+                else:
+                    print(f'WARNING: active tasks ({len(active_tasks)}) exceeds number of workers ({MAX_WORKERS}). ({len(message_queue)} messages in the queue)')
+
+global previousTab
+global username
+global youtubeURL
+global backMessageFour,backMessageThree,backMessageTwo,backMessageOne
+backMessageFour = ''
+backMessageThree = ''
+backMessageTwo = ''
+backMessageOne = ''
+youtubeURL = None
+twitchActive = False
+youtubeActive = False
+previousTab = 0
+while(previousTab == 0):
+    web = mtTkinter.Tk()
+    web.lift()
+    web.attributes('-topmost', True)
+    web.grab_set()
+    web.grab_release()
+    web.focus_force()
+    web.update()
+    web.title("ContentPlays")
+    web.geometry("525x350")
+    web.config(background = "white")
+    web.minsize(525,350)
+    web.maxsize(525,350)
+    youtubePhoto = PhotoImage(file = "youtube.png")
+    youtubeResize = youtubePhoto.subsample(3,3)
+    twitchPhoto = PhotoImage(file = "twitch.png")
+    twitchResize = twitchPhoto.subsample(3,3)
+    webText = Label(web, text="Select The Platform",
+                        bg = "white",
+                        fg = "black",
+                        font = ("Arial", 17))
+    twitchButton = Button(web,height = 140, width = 100, text="Twitch",font = ("Arial", 12), image= twitchResize,compound = TOP, command= twitch_Button)
+    youtubeButton = Button(web,height = 140, width = 100, text="Youtube",font = ("Arial", 12), image= youtubeResize,compound = TOP, command= youtube_Button)
+    thanks = Label(web, text="Original code by Wituz, updated by DDarknut, DougDoug, Ottomated. Further expanded by Bloop",
+                        bg = "white",
+                        fg = "black",
+                        font = ("Arial", 7))
+
+
+    web.protocol("WM_DELETE_WINDOW", close_window)
+    webText.place(x=155, y=50)
+    twitchButton.place(x=120, y=100)
+    youtubeButton.place(x=285, y=100)
+    thanks.place(x=0, y=330)
+    web.mainloop()
+    while(previousTab == 1):
+        platform = mtTkinter.Tk()
+        platform.lift()
+        platform.attributes('-topmost', True)
+        platform.grab_set()
+        platform.grab_release()
+        platform.focus_force()
+        platform.update()
+        platform.title("ContentPlays")
+        platform.geometry("525x350")
+        platform.config(background = "white")
+        platform.minsize(525,350)
+        platform.maxsize(525,350)
+        if(twitchActive == True):
+            webText = Label(platform, text="Enter Your Twitch Username",
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+            username = Entry(platform, text = "Username..", width = 53)
+            username.place(x=25, y=50)
+            webText.place(x=5, y=20)
+        if(youtubeActive == True):
+            webText = Label(platform, text="Enter Your Channel ID",
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+            webURL = Label(platform, text="Enter Your Stream URL",
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+            username = Entry(platform, text = "Channel ID..", width = 53)
+            youtubeURL = Entry(platform, text = "Channel URL..", width = 53)
+            username.place(x=25, y=50)
+            webText.place(x=5, y=20)
+            webURL.place(x=5, y=80)
+            youtubeURL.place(x=25, y=110)
+        nextButton = Button(platform, text="Next",height = 2, width = 5, command = WebSite)
+        nextButton.place(x=460, y = 290)
+        backButton = Button(platform, text="Back",height = 2, width = 5, command = backTrackAccount)
+        backButton.place(x=15, y = 290)
+        platform.protocol("WM_DELETE_WINDOW", close_window)
+        platform.mainloop()
+        while(previousTab == 2):
+            game = mtTkinter.Tk()
+            game.lift()
+            game.attributes('-topmost', True)
+            game.grab_set()
+            game.grab_release()
+            game.focus_force()
+            game.update()
+            game.title("ContentPlays")
+            game.geometry("525x350")
+            game.config(background = "white")
+            game.minsize(525,350)
+            game.maxsize(525,350)
+            webText = Label(game, text="Select A Game",
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 15))
+            webText.place(x=175, y=50)
+            minecraftButton = Button(game, text="Minecraft",height = 2, width = 7, command = minecraftSetting)
+            minecraftButton.place(x=75, y = 100)
+            backButton = Button(game, text="Back",height = 2, width = 5, command = backTrackPlatform)
+            backButton.place(x=15, y = 290)
+            game.protocol("WM_DELETE_WINDOW", close_window)
+            game.mainloop()
+            while(previousTab == 3):
+                start = mtTkinter.Tk()
+                start.lift()
+                start.attributes('-topmost', True)
+                start.grab_set()
+                start.grab_release()
+                start.focus_force()
+                start.update()
+                start.title("ContentPlays")
+                start.geometry("525x350")
+                start.config(background = "white")
+                start.minsize(525,350)
+                start.maxsize(525,350)
+
+
+                messageRelayOne = Label(start, text=backMessageOne,
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+                messageRelayTwo = Label(start, text=backMessageTwo,
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+                messageRelayThree = Label(start, text=backMessageThree,
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+                messageRelayFour = Label(start, text=backMessageFour,
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+
+
+                startButton = Button(start, text="Start",height = 2, width = 5, command = thread)
+                startButton.place(x=225, y = 290)
+                endButton = Button(start, text="End",height = 2, width = 5, command = endProgram)
+                endButton.place(x=275, y = 290)
+                messageRelayOne.place(x= 5, y=200)
+                messageRelayTwo.place(x= 5, y=220)
+                messageRelayThree.place(x= 5, y=240)
+                messageRelayFour.place(x= 5, y=260)
+                start.protocol("WM_DELETE_WINDOW", close_window)
+                start.after(1, update)
+                start.mainloop()
+exit()
