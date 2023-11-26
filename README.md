@@ -11,7 +11,6 @@ python -m pip install requests
 python -m pip install mouse  
 python -m pip install tkinter  
 python -m pip install mttkinter  
-python -m pip install threading  
 
 Once Python is set up, ~~simply change the Twitch username (or Youtube channel ID) in TwitchPlays_TEMPLATE.py~~ all you need to do it boot up the program and follow the prompts, and you'll be ready to go.
 
@@ -19,11 +18,18 @@ This code is originally based off Wituz's Twitch Plays template, then expanded b
 
 This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, DDarknut, Ottomated, and the original coder Wituz. I decided to further expand this program to allow people with little coding knowledge to have options and a GUI
 
-# New Feature Coming Soon  
+# Latest Feature  
+#Control View On Minecraft  
+#Screen Limit on First Screen(1920x1080) Note: Prevent the mouse and keyboard from trying or moving beyond the first screen on your PC
+#Colored prompts  
+
+# Future Feature Coming Soon  
 #More Games Options!!!  
 #Green screen controller  
-#Live Controller View  
-#Custom Controller options  
+#Live Controller View for all game  
+#Custom Controller Options  
+#Screen Range Options  
+#Pause Control Feature
 #Create Pip Bash File  
 #Fix some global code(I got lazy :3)  
 
