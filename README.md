@@ -20,9 +20,10 @@ This code is originally based off Wituz's Twitch Plays template, then expanded b
 This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, DDarknut, Ottomated, and the original coder Wituz. I decided to further expand this program to allow people with little coding knowledge to have options and a GUI
 
 # New Feature Coming Soon  
-#More Games!!!  
+#More Games Options!!!  
 #Green screen controller  
 #Live Controller View  
+#Custom Controller options  
 #Fix some global code(I got lazy :3)  
 
 #If you have any requests, feel from to comment, and commit some changes I will review it/test it. Any outside questions about the code feel free to message me at @BloopCasual on Discord (Please mention the code so I don't discard your message for spam)
