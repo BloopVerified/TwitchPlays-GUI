@@ -119,9 +119,15 @@ def handle_message(message):
                 keyboard.press("s")
                 time.sleep(1)
                 keyboard.release("s")
-            elif(msg.lower() == 'space'):
+            elif(msg.lower() == 'space' or msg.lower() == 'jump'):
                 pydirectinput.press('space')
                 time.sleep(0)
+            elif(msg.lower() == 'hop'):
+                pydirectinput.keyDown('space')
+                keyboard.press("w")
+                time.sleep(1)
+                pydirectinput.keyUp('space')
+                keyboard.release("w")
             elif(msg.lower() == '1'):
                 keyboard.press("1")
                 time.sleep(0)
@@ -158,21 +164,37 @@ def handle_message(message):
                 keyboard.press("9")
                 time.sleep(0)
                 keyboard.release("9")
-            elif(msg.lower() == 'hand2'):
+            elif(msg.lower() == 'h2'):
                 keyboard.press("f")
                 time.sleep(0)
                 keyboard.release("f")
-            elif(msg.lower() == 'turn right'):
-                mouse.move(45, 0, False, .2)
-            elif(msg.lower() == 'turn left'):
-                mouse.move(-45, 0, False, .2)
-            elif(msg.lower() == 'turn up'):
-                mouse.move(0, -45, False, .2)
-            elif(msg.lower() == 'turn down'):
-                mouse.move(0, 45, False, .2)
+            elif(msg.lower() == 'inv'):
+                keyboard.press("e")
+                time.sleep(0)
+                keyboard.release("e")
+            elif(msg.lower() == 'drop'):
+                keyboard.press("q")
+                time.sleep(0)
+                keyboard.release("q")
+            elif(msg.lower() == 'rt'):
+                mouse.move(90, 0, False, .1)
+            elif(msg.lower() == 'lt'):
+                mouse.move(-90, 0, False, .1)
+            elif(msg.lower() == 'ut'):
+                mouse.move(0, -90, False, .1)
+            elif(msg.lower() == 'dt'):
+                mouse.move(0, 90, False, .1)
             elif(msg.lower() == 'hit'):
                 mouse.press("left")
                 time.sleep(0)
+                mouse.release("left")
+            elif(msg.lower() == 'smine'):
+                mouse.press("left")
+                time.sleep(1)
+                mouse.release("left")
+            elif(msg.lower() == 'lmine'):
+                mouse.press("left")
+                time.sleep(3)
                 mouse.release("left")
             elif(msg.lower() == 'place'):
                 mouse.press("right")
