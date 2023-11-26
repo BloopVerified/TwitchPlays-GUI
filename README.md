@@ -25,4 +25,4 @@ This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, 
 #Live Controller View  
 #Fix some global code(I got lazy :3)  
 
-#If you have any requests, feel from to comment, and commit some changes I will review it/test it. 
+#If you have any requests, feel from to comment, and commit some changes I will review it/test it. Any outside questions about the code feel free to message me at @BloopCasual on Discord (Please mention the code so I don't discard your message for spam)
