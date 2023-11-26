@@ -9,6 +9,9 @@ python -m pip install pyautogui
 python -m pip install pynput  
 python -m pip install requests  
 python -m pip install mouse
+python -m pip install tkinter
+python -m pip install mttkinter
+python -m pip install threading
 
 Once Python is set up, simply change the Twitch username (or Youtube channel ID) in TwitchPlays_TEMPLATE.py, and you'll be ready to go.
 
