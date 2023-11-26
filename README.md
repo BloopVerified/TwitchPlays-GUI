@@ -13,9 +13,9 @@ python -m pip install tkinter
 python -m pip install mttkinter  
 python -m pip install threading  
 
-Once Python is set up, simply change the Twitch username (or Youtube channel ID) in TwitchPlays_TEMPLATE.py, and you'll be ready to go.
+Once Python is set up, ~~simply change the Twitch username (or Youtube channel ID) in TwitchPlays_TEMPLATE.py~~ all you need to do it boot up the program and follow the prompts, and you'll be ready to go.
 
-This code is originally based off Wituz's Twitch Plays template, then expanded by DougDoug and DDarknut with help from Ottomated for the Youtube side. For now I am not reviewing any pull requests or code changes, this code is meant to be a simple prototype that is uploaded for educational purposes. But feel free to fork the project and create your own version!
+This code is originally based off Wituz's Twitch Plays template, then expanded by DougDoug and DDarknut with help from Ottomated for the Youtube side. For now I am not reviewing any pull requests or code changes, this code is meant to be a simple prototype that is uploaded for educational purposes(DougDoug's words but I will honor them too). But feel free to fork the project and create your own version! 
 
 This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, DDarknut, Ottomated, and the original coder Wituz. I decided to further expand this program to allow people with little coding knowledge to have options and a GUI
 
