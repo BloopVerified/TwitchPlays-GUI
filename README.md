@@ -19,7 +19,7 @@ This code is originally based off Wituz's Twitch Plays template, then expanded b
 
 This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, DDarknut, Ottomated, and the original coder Wituz. I decided to further expand this program to allow people with little coding knowledge to have options and a GUI
 
-#New Feature Coming Soon  
+# New Feature Coming Soon  
 #More Games!!!  
 #Green screen controller  
 #Live Controller View  
