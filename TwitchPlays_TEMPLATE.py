@@ -67,6 +67,7 @@ def endProgram():
     if(t == ''):
         updateClear()
     previousTab -= 1
+    startButton["state"] = ACTIVE
     start.destroy()
 
 def twitch_Button():
@@ -97,6 +98,12 @@ def handle_message(message):
         backMessageTwo= backMessageOne
         backMessageOne = "Got this message from " + username + ": " + msg
 
+        position = str(mouse.get_position())
+        position = position.replace("(","")
+        position = position.replace(")","")
+        position = position.split(", ")
+        positionX = position[0]
+        positionY = position[1]
         
         # I've added some example videogame logic code below:
         ###################################
@@ -104,102 +111,162 @@ def handle_message(message):
         ###################################
         if(gamesetting == 0 and previousTab == 3):
             if(msg.lower() == 'right'):
+                RightButton['bg'] = 'red'
                 keyboard.press("d")
                 time.sleep(1)
                 keyboard.release("d")
-            elif(msg.lower() == 'left'):
+                RightButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'left' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                LeftButton['bg'] = 'red'
                 keyboard.press("a")
                 time.sleep(1)
                 keyboard.release("a")
-            elif(msg.lower() == 'forward'):
+                LeftButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'forward' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                upButton['bg'] = 'red'
                 keyboard.press("w")
                 time.sleep(1)
                 keyboard.release("w")
-            elif(msg.lower() == 'back'):
+                upButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'back' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                DownButton['bg'] = 'red'
                 keyboard.press("s")
                 time.sleep(1)
                 keyboard.release("s")
-            elif(msg.lower() == 'space' or msg.lower() == 'jump'):
+                DownButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'space' or msg.lower() == 'jump' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                spaceButton['bg'] = 'red'
                 pydirectinput.press('space')
                 time.sleep(0)
-            elif(msg.lower() == 'hop'):
+                spaceButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'hop' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                upButton['bg'] = 'red'
+                spaceButton['bg'] = 'red'
                 pydirectinput.keyDown('space')
                 keyboard.press("w")
                 time.sleep(1)
                 pydirectinput.keyUp('space')
                 keyboard.release("w")
-            elif(msg.lower() == '1'):
+                upButton['bg'] = '#f0f0f0'
+                spaceButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'shifton' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                pydirectinput.keyDown('shift')
+                shiftButton['bg'] = 'red'
+            elif(msg.lower() == 'shiftoff' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                pydirectinput.keyUp('shift')
+                shiftButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == '1' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                oneButton['bg'] = 'red'
                 keyboard.press("1")
-                time.sleep(0)
                 keyboard.release("1")
-            elif(msg.lower() == '2'):
-                keyboard.press("2")
-                time.sleep(0)
-                keyboard.release("2")
-            elif(msg.lower() == '3'):
-                keyboard.press("3")
-                time.sleep(0)
-                keyboard.release("3")
-            elif(msg.lower() == '4'):
-                keyboard.press("4")
-                time.sleep(0)
-                keyboard.release("4")
-            elif(msg.lower() == '5'):
-                keyboard.press("5")
-                time.sleep(0)
-                keyboard.release("5")
-            elif(msg.lower() == '6'):
-                keyboard.press("6")
-                time.sleep(0)
-                keyboard.release("6")
-            elif(msg.lower() == '7'):
-                keyboard.press("7")
-                time.sleep(0)
-                keyboard.release("7")
-            elif(msg.lower() == '8'):
-                keyboard.press("8")
-                time.sleep(0)
-                keyboard.release("8")
-            elif(msg.lower() == '9'):
-                keyboard.press("9")
-                time.sleep(0)
-                keyboard.release("9")
-            elif(msg.lower() == 'h2'):
-                keyboard.press("f")
-                time.sleep(0)
-                keyboard.release("f")
-            elif(msg.lower() == 'inv'):
-                keyboard.press("e")
-                time.sleep(0)
-                keyboard.release("e")
-            elif(msg.lower() == 'drop'):
-                keyboard.press("q")
-                time.sleep(0)
-                keyboard.release("q")
-            elif(msg.lower() == 'rt'):
-                mouse.move(90, 0, False, .1)
-            elif(msg.lower() == 'lt'):
-                mouse.move(-90, 0, False, .1)
-            elif(msg.lower() == 'ut'):
-                mouse.move(0, -90, False, .1)
-            elif(msg.lower() == 'dt'):
-                mouse.move(0, 90, False, .1)
-            elif(msg.lower() == 'hit'):
-                mouse.press("left")
-                time.sleep(0)
-                mouse.release("left")
-            elif(msg.lower() == 'smine'):
-                mouse.press("left")
                 time.sleep(1)
+                oneButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == '2' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                twoButton['bg'] = 'red'
+                keyboard.press("2")
+                keyboard.release("2")
+                time.sleep(1)
+                twoButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == '3' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                threeButton['bg'] = 'red'
+                keyboard.press("3")
+                keyboard.release("3")
+                time.sleep(1)
+                threeButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == '4' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                fourButton['bg'] = 'red'
+                keyboard.press("4")
+                keyboard.release("4")
+                time.sleep(1)
+                fourButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == '5' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                fiveButton['bg'] = 'red'
+                keyboard.press("5")
+                keyboard.release("5")
+                time.sleep(1)
+                fiveButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == '6' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                sixButton['bg'] = 'red'
+                keyboard.press("6")
+                keyboard.release("6")
+                time.sleep(1)
+                sixButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == '7' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                sevenButton['bg'] = 'red'
+                keyboard.press("7")
+                keyboard.release("7")
+                time.sleep(1)
+                sevenButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == '8' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                eightButton['bg'] = 'red'
+                keyboard.press("8")
+                keyboard.release("8")
+                time.sleep(1)
+                eightButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == '9' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                nineButton['bg'] = 'red'
+                keyboard.press("9")
+                keyboard.release("9")
+                time.sleep(1)
+                nineButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'h2' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                secHandButton['bg'] = 'red'
+                keyboard.press("f")
+                keyboard.release("f")
+                time.sleep(1)
+                secHandButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'inv' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                InvButton['bg'] = 'red'
+                keyboard.press("e")
+                keyboard.release("e")
+                time.sleep(1)
+                InvButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'drop' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                dropButton['bg'] = 'red'
+                keyboard.press("q")
+                keyboard.release("q")
+                time.sleep(1)
+                dropButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'rt' and not(int(positionX)+45 >= 1920 or int(positionX) <= 0)):
+                mouseMoveRightButton['bg'] = 'red'
+                mouse.move(45, 0, False, .1)
+                mouseMoveRightButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'lt' and not(int(positionX)-45 >= 1920 or int(positionX) <= 0)):
+                mouseMoveLeftButton['bg'] = 'red'
+                mouse.move(-45, 0, False, .1)
+                mouseMoveLeftButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'ut' and not(int(positionY)-45 >= 1080 or int(positionY) <= 0)):
+                mouseMoveUpButton['bg'] = 'red'
+                mouse.move(0, -45, False, .1)
+                mouseMoveUpButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'dt'and not(int(positionY)+45 >= 1080 or int(positionY) <= 0)):
+                mouseMoveDownButton['bg'] = 'red'
+                mouse.move(0, 45, False, .1)
+                mouseMoveDownButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'hit' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                mouseLeftButton['bg'] = 'red'
+                mouse.press("left")
                 mouse.release("left")
-            elif(msg.lower() == 'lmine'):
+                time.sleep(1)
+                mouseLeftButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'smine' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                mouseLeftButton['bg'] = 'red'
+                mouse.press("left")
+                mouse.release("left")
+                time.sleep(1)
+                mouseLeftButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'lmine' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                mouseLeftButton['bg'] = 'red'
                 mouse.press("left")
                 time.sleep(3)
                 mouse.release("left")
-            elif(msg.lower() == 'place'):
+                mouseLeftButton['bg'] = '#f0f0f0'
+            elif(msg.lower() == 'place' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+                mouseRightButton['bg'] = 'red'
                 mouse.press("right")
-                time.sleep(0)
                 mouse.release("right")
+                time.sleep(1)
+                mouseRightButton['bg'] = '#f0f0f0'
 
         ####################################
         ####################################
@@ -258,6 +325,9 @@ def WebSite():
 def thread():
     global t1
     t1 = threading.Thread(target=Program)
+    startButton["state"] = DISABLED
+    endButton["state"] = DISABLED
+    startButton['bg'] = 'light yellow'
     t1.start()
 
 def Program(eventRun=None):
@@ -287,17 +357,20 @@ def Program(eventRun=None):
     # Count down before starting, so you have time to load up the game
     countdown = 5
     while countdown > 0:
-        print(countdown)
+        messageRelayConnect.config(text=countdown)
         countdown -= 1
         time.sleep(1)
 
     if (STREAMING_ON_TWITCH and previousTab == 3):
         t = TwitchPlays_Connection.Twitch()
         t.twitch_connect(TWITCH_CHANNEL)
+        messageRelayConnect.config(text='Connected To Twitch')
     elif(previousTab == 3):
         t = TwitchPlays_Connection.YouTube()
         t.youtube_connect(YOUTUBE_CHANNEL_ID, YOUTUBE_STREAM_URL)
-
+        messageRelayConnect.config(text='Connected To Youtube')
+    endButton["state"] = ACTIVE
+    startButton['bg'] = 'light green'
 
     while True:
 
@@ -481,15 +554,83 @@ while(previousTab == 0):
                     fg = "black",
                     font = ("Arial", 10))
 
+                messageRelayConnect = Label(start, text='',
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 13),
+                    anchor="center")
+
 
                 startButton = Button(start, text="Start",height = 2, width = 5, command = thread)
                 startButton.place(x=225, y = 290)
                 endButton = Button(start, text="End",height = 2, width = 5, command = endProgram)
+
+                if(gamesetting == 0):
+                    upButton = Button(start, text="Up", height=1, width=4, state=DISABLED)
+                    DownButton = Button(start, text="Down", height=1, width=4, state=DISABLED)
+                    LeftButton = Button(start, text="Left", height=1, width=4, state=DISABLED)
+                    RightButton = Button(start, text="Right", height=1, width=4, state=DISABLED)
+                    upButton.place(x=60, y=115)
+                    DownButton.place(x=60, y=175)
+                    LeftButton.place(x=20, y=145)
+                    RightButton.place(x=100, y=145)
+
+                    secHandButton = Button(start, text="Swap", height=1, width=4, state=DISABLED)
+                    secHandButton.place(x=160, y=115)
+
+                    oneButton = Button(start, text="1", height=1, width=3, state=DISABLED)
+                    twoButton = Button(start, text="2", height=1, width=3, state=DISABLED)
+                    threeButton = Button(start, text="3", height=1, width=3, state=DISABLED)
+                    fourButton = Button(start, text="4", height=1, width=3, state=DISABLED)
+                    fiveButton = Button(start, text="5", height=1, width=3, state=DISABLED)
+                    sixButton = Button(start, text="6", height=1, width=3, state=DISABLED)
+                    sevenButton = Button(start, text="7", height=1, width=3, state=DISABLED)
+                    eightButton = Button(start, text="8", height=1, width=3, state=DISABLED)
+                    nineButton = Button(start, text="9", height=1, width=3, state=DISABLED)
+                    oneButton.place(x=20, y=50)
+                    twoButton.place(x=60, y=50)
+                    threeButton.place(x=100, y=50)
+                    fourButton.place(x=140, y=50)
+                    fiveButton.place(x=180, y=50)
+                    sixButton.place(x=220, y=50)
+                    sevenButton.place(x=260, y=50)
+                    eightButton.place(x=300, y=50)
+                    nineButton.place(x=340, y=50)
+
+                    spaceButton = Button(start, text="Space Bar", height=1, width=10, state=DISABLED)
+                    spaceButton.place(x=160, y=175)
+
+                    shiftButton = Button(start, text="Shift", height=1, width=5, state=DISABLED)
+                    shiftButton.place(x=260, y=175)
+
+                    dropButton = Button(start, text="Drop", height=1, width=4, state=DISABLED)
+                    dropButton.place(x=20, y=90)
+
+                    InvButton = Button(start, text="Inv", height=1, width=4, state=DISABLED)
+                    InvButton.place(x=100, y=90)
+
+                    mousePalmButton = Button(start, text="", height=2, width=5, state=DISABLED)
+                    mouseLeftButton = Button(start, text="L", height=1, width=2, state=DISABLED)
+                    mouseRightButton = Button(start, text="R", height=1, width=2, state=DISABLED)
+                    mousePalmButton.place(x=430, y=125)
+                    mouseLeftButton.place(x=430, y=100)
+                    mouseRightButton.place(x=451, y=100)
+
+                    mouseMoveUpButton = Button(start, text="↑", height=1, width=1, state=DISABLED)
+                    mouseMoveDownButton = Button(start, text="↓", height=1, width=1, state=DISABLED)
+                    mouseMoveLeftButton = Button(start, text="←", height=1, width=1, state=DISABLED)
+                    mouseMoveRightButton = Button(start, text="→", height=1, width=1, state=DISABLED)
+                    mouseMoveUpButton.place(x=445, y=70)
+                    mouseMoveDownButton.place(x=445, y=170)
+                    mouseMoveLeftButton.place(x=405, y=120)
+                    mouseMoveRightButton.place(x=480, y=120)
+
                 endButton.place(x=275, y = 290)
                 messageRelayOne.place(x= 5, y=200)
                 messageRelayTwo.place(x= 5, y=220)
                 messageRelayThree.place(x= 5, y=240)
                 messageRelayFour.place(x= 5, y=260)
+                messageRelayConnect.place(x=10, y=5)
                 start.protocol("WM_DELETE_WINDOW", close_window)
                 start.after(1, update)
                 start.mainloop()
