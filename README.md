@@ -29,7 +29,7 @@ This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, 
 #Live Controller View for all game  
 #Custom Controller Options  
 #Screen Range Options  
-#Pause Control Feature
+#Pause Control Feature  
 #Create Pip Bash File  
 #Fix some global code(I got lazy :3)  
 
