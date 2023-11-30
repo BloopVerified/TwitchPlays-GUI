@@ -19,19 +19,19 @@ This code is originally based off Wituz's Twitch Plays template, then expanded b
 This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, DDarknut, Ottomated, and the original coder Wituz. I decided to further expand this program to allow people with little coding knowledge to have options and a GUI
 
 # Recent Features  
-#(Update: 11-30-23) GUI Drift Fix  
-#(Update: 11-30-23) Failed Login Error Notification  
-#(Update: 11-26-23) Control View On Minecraft  
-#(Update: 11-26-23) Screen Limit on First Screen(1920x1080) Note: Prevent the mouse and keyboard from typing or moving beyond the first screen on your PC  
-#(Update: 11-26-23) Colored prompts  
+- (Update: 11-30-23) GUI Drift Fix  
+- (Update: 11-30-23) Failed Login Error Notification  
+- (Update: 11-26-23) Control View On Minecraft  
+- (Update: 11-26-23) Screen Limit on First Screen(1920x1080) Note: Prevent the mouse and keyboard from typing or moving beyond the first screen on your PC  
+- (Update: 11-26-23) Colored prompts  
 
 # Future Feature Coming Soon  
-#More Games Options!!!  
-#Green screen controller  
-#Live Controller View for all game  
-#Custom Controller Options  
-#Screen Range Options  
-#Pause Control Feature  
-#Create Pip Bash File  
+- More Games Options!!!  
+- Green screen controller  
+- Live Controller View for all game  
+- Custom Controller Options  
+- Screen Range Options  
+- Pause Control Feature  
+- Create Pip Bash File  
 
 #If you have any requests, feel from to comment, and commit some changes I will review it/test it. Any outside questions about the code feel free to message me at @BloopCasual on Discord (Please mention the code so I don't discard your message for spam)
