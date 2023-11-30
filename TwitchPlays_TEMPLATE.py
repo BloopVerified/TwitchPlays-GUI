@@ -71,8 +71,8 @@ def endProgram():
     start.destroy()
 
 def twitch_Button():
-    global previousTab
     global twitchActive
+    global previousTab
     previousTab = 1
     twitchActive = True
     web.destroy()
@@ -361,16 +361,21 @@ def Program(eventRun=None):
         countdown -= 1
         time.sleep(1)
 
-    if (STREAMING_ON_TWITCH and previousTab == 3):
-        t = TwitchPlays_Connection.Twitch()
-        t.twitch_connect(TWITCH_CHANNEL)
-        messageRelayConnect.config(text='Connected To Twitch')
-    elif(previousTab == 3):
-        t = TwitchPlays_Connection.YouTube()
-        t.youtube_connect(YOUTUBE_CHANNEL_ID, YOUTUBE_STREAM_URL)
-        messageRelayConnect.config(text='Connected To Youtube')
-    endButton["state"] = ACTIVE
-    startButton['bg'] = 'light green'
+    try:
+        if (STREAMING_ON_TWITCH and previousTab == 3):
+            t = TwitchPlays_Connection.Twitch()
+            t.twitch_connect(TWITCH_CHANNEL)
+            messageRelayConnect.config(text='Connected To Twitch')
+        elif(previousTab == 3):
+            t = TwitchPlays_Connection.YouTube()
+            t.youtube_connect(YOUTUBE_CHANNEL_ID, YOUTUBE_STREAM_URL)
+            messageRelayConnect.config(text='Connected To Youtube')
+        endButton["state"] = ACTIVE
+        startButton['bg'] = 'light green'
+    except Exception as e:
+        messageRelayConnect.config(text='Error: Unable to connect to a platform. Check login details...')
+        endButton["state"] = ACTIVE
+        startButton['bg'] = 'red'
 
     while True:
 
@@ -409,10 +414,7 @@ def Program(eventRun=None):
                 else:
                     print(f'WARNING: active tasks ({len(active_tasks)}) exceeds number of workers ({MAX_WORKERS}). ({len(message_queue)} messages in the queue)')
 
-global previousTab
-global username
-global youtubeURL
-global backMessageFour,backMessageThree,backMessageTwo,backMessageOne
+
 backMessageFour = ''
 backMessageThree = ''
 backMessageTwo = ''
@@ -431,7 +433,7 @@ while(previousTab == 0):
     web.update()
     web.title("ContentPlays")
     web.iconbitmap("icon.ico")
-    web.geometry("525x350")
+    web.geometry("525x350+700+300")
     web.config(background = "white")
     web.minsize(525,350)
     web.maxsize(525,350)
@@ -443,7 +445,7 @@ while(previousTab == 0):
                         bg = "white",
                         fg = "black",
                         font = ("Arial", 17))
-    twitchButton = Button(web,height = 140, width = 100, text="Twitch",font = ("Arial", 12), image= twitchResize,compound = TOP, command= twitch_Button)
+    twitchButton = Button(web,height = 140, width = 100, text="Twitch",font = ("Arial", 12), image= twitchResize,compound = TOP, command = twitch_Button)
     youtubeButton = Button(web,height = 140, width = 100, text="Youtube",font = ("Arial", 12), image= youtubeResize,compound = TOP, command= youtube_Button)
     thanks = Label(web, text="Original code by Wituz, updated by DDarknut, DougDoug, Ottomated. Further expanded by Bloop",
                         bg = "white",
@@ -467,7 +469,7 @@ while(previousTab == 0):
         platform.update()
         platform.title("ContentPlays")
         platform.iconbitmap("icon.ico")
-        platform.geometry("525x350")
+        platform.geometry("525x350+700+300")
         platform.config(background = "white")
         platform.minsize(525,350)
         platform.maxsize(525,350)
@@ -510,7 +512,7 @@ while(previousTab == 0):
             game.update()
             game.title("ContentPlays")
             game.iconbitmap("icon.ico")
-            game.geometry("525x350")
+            game.geometry("525x350+700+300")
             game.config(background = "white")
             game.minsize(525,350)
             game.maxsize(525,350)
@@ -535,7 +537,7 @@ while(previousTab == 0):
                 start.update()
                 start.title("ContentPlays")
                 start.iconbitmap("icon.ico")
-                start.geometry("525x350")
+                start.geometry("525x350+700+300")
                 start.config(background = "white")
                 start.minsize(525,350)
                 start.maxsize(525,350)
