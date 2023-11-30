@@ -20,9 +20,9 @@ This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, 
 
 # Recent Features  
 #(Update: 11-30-23) Failed Login Error  
-#(Update: 11-26-23)Control View On Minecraft  
-#(Update: 11-26-23)Screen Limit on First Screen(1920x1080) Note: Prevent the mouse and keyboard from typing or moving beyond the first screen on your PC  
-#(Update: 11-26-23)Colored prompts  
+#(Update: 11-26-23) Control View On Minecraft  
+#(Update: 11-26-23) Screen Limit on First Screen(1920x1080) Note: Prevent the mouse and keyboard from typing or moving beyond the first screen on your PC  
+#(Update: 11-26-23) Colored prompts  
 
 # Future Feature Coming Soon  
 #More Games Options!!!  
