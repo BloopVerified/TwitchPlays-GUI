@@ -11,6 +11,95 @@ from mttkinter import *
 import pydirectinput
 import pyautogui
 import mouse
+from functools import partial
+import sys
+
+class ScreenManage():
+    def __init__(self):
+        self.startX = StringVar()
+        self.endX = StringVar()
+        self.startY = StringVar()
+        self.endY = StringVar()
+
+        self.startX.set('0')
+        self.endX.set('0')
+        self.startY.set('0')
+        self.endY.set('0')
+
+
+    def screenOption(self):
+        screenRes = mtTkinter.Tk()
+        screenRes.lift()
+        screenRes.attributes('-topmost', True)
+        screenRes.grab_set()
+        screenRes.grab_release()
+        screenRes.focus_force()
+        screenRes.title("ContentPlays")
+        screenRes.iconbitmap("icon.ico")
+        screenRes.geometry("300x300+700+300")
+        screenRes.config(background="white")
+        screenRes.minsize(300, 300)
+        screenRes.maxsize(300, 300)
+        youtubePhoto = PhotoImage(file="youtube.png")
+        youtubeResize = youtubePhoto.subsample(3, 3)
+        twitchPhoto = PhotoImage(file="twitch.png")
+        twitchResize = twitchPhoto.subsample(3, 3)
+        ScreenXStart = Label(screenRes, text="Enter Screen X Start Variable",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 10))
+        ScreenXEnd = Label(screenRes, text="Enter Screen X End Variable",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 10))
+        ScreenXStartEntry = Entry(screenRes, width=25, textvariable=self.startX)
+        ScreenXEndEntry = Entry(screenRes, width=25, textvariable=self.endX)
+
+        ScreenYStart = Label(screenRes, text="Enter Screen Y Start Variable",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 10))
+        ScreenYEnd = Label(screenRes, text="Enter Screen Y End Variable",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 10))
+        ScreenYStartEntry = Entry(screenRes, width=25, textvariable=self.startY)
+        ScreenYEndEntry = Entry(screenRes, width=25, textvariable=self.endY)
+        ScreenXStart.place(x=10, y=25)
+        ScreenXStartEntry.place(x=10, y=50)
+        ScreenXEnd.place(x=10, y=75)
+        ScreenXEndEntry.place(x=10, y=100)
+        ScreenYStart.place(x=10, y=125)
+        ScreenYStartEntry.place(x=10, y=150)
+        ScreenYEnd.place(x=10, y=175)
+        ScreenYEndEntry.place(x=10, y=200)
+        screenLimitFunc = partial(ScreenManage.ScreenGet, self,screenRes, ScreenXStartEntry, ScreenXEndEntry, ScreenYStartEntry, ScreenYEndEntry)
+        SubmitScreenButton = Button(screenRes, height = 1, width = 5, text="Submit", font = ("Arial", 12), command= screenLimitFunc)
+        SubmitScreenButton.place(x=125, y=230)
+        screenRes.after(1, self.updateScreenEntry, ScreenXStartEntry, ScreenXEndEntry, ScreenYStartEntry, ScreenYEndEntry)
+        closeRes = partial(ScreenManage.screenRes_close_window, self, screenRes)
+        screenRes.protocol("WM_DELETE_WINDOW", closeRes)
+
+    def screenRes_close_window(self, screenRes):
+        screenRes.destroy()
+    def ScreenGet(self, screenRes, ScreenXStartEntry, ScreenXEndEntry, ScreenYStartEntry, ScreenYEndEntry):
+        global startX, endX, startY, endY
+        self.startX.set(ScreenXStartEntry.get())
+        startX = (ScreenXStartEntry.get())
+        self.endX.set(ScreenXEndEntry.get())
+        endX = (ScreenXEndEntry.get())
+        self.startY.set(ScreenYStartEntry.get())
+        startY = (ScreenYStartEntry.get())
+        self.endY.set(ScreenYEndEntry.get())
+        endY = (ScreenYEndEntry.get())
+        screenRes.destroy()
+
+    def updateScreenEntry(self,ScreenXStartEntry, ScreenXEndEntry, ScreenYStartEntry, ScreenYEndEntry):
+        ScreenXStartEntry.insert(END, self.startX.get())
+        ScreenXEndEntry.insert(END, self.endX.get())
+        ScreenYStartEntry.insert(END, self.startY.get())
+        ScreenYEndEntry.insert(END, self.endY.get())
+
 
 def backTrackAccount():
     platform.destroy()
@@ -28,14 +117,14 @@ def backTrackAccount():
     twitchActive = False
     global youtubeActive
     youtubeActive = False
-    
 
-def update():
+
+def updateMessage():
     messageRelayOne.config(text=backMessageFour)
     messageRelayTwo.config(text=backMessageThree)
     messageRelayThree.config(text=backMessageTwo)
     messageRelayFour.config(text=backMessageOne)
-    start.after(1000, update)
+    start.after(1, updateMessage)
 
 
 def updateClear():
@@ -44,18 +133,25 @@ def updateClear():
     backMessageThree = ''
     backMessageTwo = ''
     backMessageOne = ''
-    start.after(1000, updateClear)
+    start.after(1, updateClear)
 
 
 def backTrackPlatform():
     game.destroy()
     global previousTab
     previousTab -= 1
-    
+
 
 def minecraftSetting():
     global gamesetting
     gamesetting = 0
+    global previousTab
+    previousTab = 3
+    game.destroy()
+
+def customSetting():
+    global gamesetting
+    gamesetting = 99
     global previousTab
     previousTab = 3
     game.destroy()
@@ -84,10 +180,40 @@ def youtube_Button():
     youtubeActive = True
     web.destroy()
 
-def close_window(eventLeave = None):
-    exit();
+def start_close_window():
+    thread()
+    start.destroy()
+    exit()
+
+def platform_close_window():
+    platform.destroy()
+    exit()
+
+def game_close_window():
+    game.destroy()
+    exit()
+
+def web_close_window():
+    web.destroy()
+    exit()
 
 def handle_message(message):
+    ScreenXStartEntry = 0
+    ScreenXEndEntry = 0
+    ScreenYStartEntry = 0
+    ScreenYEndEntry = 0
+    try:
+        ScreenXStartEntry = int(startX)
+        ScreenXEndEntry = int(endX)
+        ScreenYStartEntry = int(startY)
+        ScreenYEndEntry = int(endY)
+
+    except Exception as e:
+        ScreenXStartEntry = 0
+        ScreenXEndEntry = 1920
+        ScreenYStartEntry = 0
+        ScreenYEndEntry = 1080
+
     try:
         msg = message['message'].lower()
         username = message['username'].lower()
@@ -104,42 +230,43 @@ def handle_message(message):
         position = position.split(", ")
         positionX = position[0]
         positionY = position[1]
-        
+
         # I've added some example videogame logic code below:
         ###################################
         # Example Minecraft Code Sample
         ###################################
+        print(positionX, ScreenXEndEntry, positionX, ScreenXStartEntry, positionY, ScreenYEndEntry, positionY, ScreenYStartEntry)
         if(gamesetting == 0 and previousTab == 3):
-            if(msg.lower() == 'right'):
+            if(msg.lower() == 'right' and ((int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) or (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry))):
                 RightButton['bg'] = 'red'
                 keyboard.press("d")
                 time.sleep(1)
                 keyboard.release("d")
                 RightButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'left' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'left' and ((int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) or (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry))):
                 LeftButton['bg'] = 'red'
                 keyboard.press("a")
                 time.sleep(1)
                 keyboard.release("a")
                 LeftButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'forward' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'forward' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 upButton['bg'] = 'red'
                 keyboard.press("w")
                 time.sleep(1)
                 keyboard.release("w")
                 upButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'back' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'back' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 DownButton['bg'] = 'red'
                 keyboard.press("s")
                 time.sleep(1)
                 keyboard.release("s")
                 DownButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'space' or msg.lower() == 'jump' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'space' or msg.lower() == 'jump' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 spaceButton['bg'] = 'red'
                 pydirectinput.press('space')
                 time.sleep(0)
                 spaceButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'hop' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'hop' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 upButton['bg'] = 'red'
                 spaceButton['bg'] = 'red'
                 pydirectinput.keyDown('space')
@@ -149,124 +276,127 @@ def handle_message(message):
                 keyboard.release("w")
                 upButton['bg'] = '#f0f0f0'
                 spaceButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'shifton' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'shifton' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 pydirectinput.keyDown('shift')
                 shiftButton['bg'] = 'red'
-            elif(msg.lower() == 'shiftoff' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'shiftoff' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 pydirectinput.keyUp('shift')
                 shiftButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == '1' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == '1' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 oneButton['bg'] = 'red'
                 keyboard.press("1")
                 keyboard.release("1")
                 time.sleep(1)
                 oneButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == '2' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == '2' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 twoButton['bg'] = 'red'
                 keyboard.press("2")
                 keyboard.release("2")
                 time.sleep(1)
                 twoButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == '3' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == '3' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 threeButton['bg'] = 'red'
                 keyboard.press("3")
                 keyboard.release("3")
                 time.sleep(1)
                 threeButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == '4' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == '4' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 fourButton['bg'] = 'red'
                 keyboard.press("4")
                 keyboard.release("4")
                 time.sleep(1)
                 fourButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == '5' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == '5' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 fiveButton['bg'] = 'red'
                 keyboard.press("5")
                 keyboard.release("5")
                 time.sleep(1)
                 fiveButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == '6' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == '6' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 sixButton['bg'] = 'red'
                 keyboard.press("6")
                 keyboard.release("6")
                 time.sleep(1)
                 sixButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == '7' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == '7' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 sevenButton['bg'] = 'red'
                 keyboard.press("7")
                 keyboard.release("7")
                 time.sleep(1)
                 sevenButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == '8' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == '8' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 eightButton['bg'] = 'red'
                 keyboard.press("8")
                 keyboard.release("8")
                 time.sleep(1)
                 eightButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == '9' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == '9' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 nineButton['bg'] = 'red'
                 keyboard.press("9")
                 keyboard.release("9")
                 time.sleep(1)
                 nineButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'h2' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'h2' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 secHandButton['bg'] = 'red'
                 keyboard.press("f")
                 keyboard.release("f")
                 time.sleep(1)
                 secHandButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'inv' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'inv' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 InvButton['bg'] = 'red'
                 keyboard.press("e")
                 keyboard.release("e")
                 time.sleep(1)
                 InvButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'drop' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'drop' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 dropButton['bg'] = 'red'
                 keyboard.press("q")
                 keyboard.release("q")
                 time.sleep(1)
                 dropButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'rt' and not(int(positionX)+45 >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'rt' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 mouseMoveRightButton['bg'] = 'red'
                 mouse.move(45, 0, False, .1)
                 mouseMoveRightButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'lt' and not(int(positionX)-45 >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'lt' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 mouseMoveLeftButton['bg'] = 'red'
                 mouse.move(-45, 0, False, .1)
                 mouseMoveLeftButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'ut' and not(int(positionY)-45 >= 1080 or int(positionY) <= 0)):
+            elif(msg.lower() == 'ut' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 mouseMoveUpButton['bg'] = 'red'
                 mouse.move(0, -45, False, .1)
                 mouseMoveUpButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'dt'and not(int(positionY)+45 >= 1080 or int(positionY) <= 0)):
+            elif(msg.lower() == 'dt'and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 mouseMoveDownButton['bg'] = 'red'
                 mouse.move(0, 45, False, .1)
                 mouseMoveDownButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'hit' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'hit' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 mouseLeftButton['bg'] = 'red'
                 mouse.press("left")
                 mouse.release("left")
                 time.sleep(1)
                 mouseLeftButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'smine' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'smine' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 mouseLeftButton['bg'] = 'red'
                 mouse.press("left")
                 mouse.release("left")
                 time.sleep(1)
                 mouseLeftButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'lmine' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'lmine' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 mouseLeftButton['bg'] = 'red'
                 mouse.press("left")
                 time.sleep(3)
                 mouse.release("left")
                 mouseLeftButton['bg'] = '#f0f0f0'
-            elif(msg.lower() == 'place' and not(int(positionX) >= 1920 or int(positionX) <= 0)):
+            elif(msg.lower() == 'place' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                 mouseRightButton['bg'] = 'red'
                 mouse.press("right")
                 mouse.release("right")
                 time.sleep(1)
                 mouseRightButton['bg'] = '#f0f0f0'
+
+            if (gamesetting == 99 and previousTab == 3):
+                print('working')
 
         ####################################
         ####################################
@@ -298,7 +428,7 @@ def WebSite():
     if(twitchActive == True):
         usernameAccess = username.get()
     if(twitchActive == True):
-        TWITCH_CHANNEL = usernameAccess 
+        TWITCH_CHANNEL = usernameAccess
 
         # If streaming on Youtube, set this to False
         STREAMING_ON_TWITCH = twitchActive
@@ -319,16 +449,20 @@ def WebSite():
         if(usernameAccess != ''):
             previousTab = 2
             platform.destroy()
-    
+
     ##################### MESSAGE QUEUE VARIABLES #####################
 
 def thread():
     global t1
     t1 = threading.Thread(target=Program)
-    startButton["state"] = DISABLED
-    endButton["state"] = DISABLED
-    startButton['bg'] = 'light yellow'
-    t1.start()
+    if (t1.is_alive() != True):
+        startButton["state"] = DISABLED
+        endButton["state"] = DISABLED
+        startButton['bg'] = 'light yellow'
+        t1.start()
+    else:
+        t1.join()
+
 
 def Program(eventRun=None):
     global previousTab
@@ -344,7 +478,7 @@ def Program(eventRun=None):
     # This is helpful for games where too many inputs at once can actually hinder the gameplay.
     # Setting to ~50 is good for total chaos, ~5-10 is good for 2D platformers
     MAX_QUEUE_LENGTH = 20
-    MAX_WORKERS = 100 # Maximum number of threads you can process at a time 
+    MAX_WORKERS = 100 # Maximum number of threads you can process at a time
 
     last_time = time.time()
     message_queue = []
@@ -377,7 +511,7 @@ def Program(eventRun=None):
         endButton["state"] = ACTIVE
         startButton['bg'] = 'red'
 
-    while True:
+    while(True):
 
         active_tasks = [t for t in active_tasks if not t.done()]
 
@@ -415,6 +549,7 @@ def Program(eventRun=None):
                     print(f'WARNING: active tasks ({len(active_tasks)}) exceeds number of workers ({MAX_WORKERS}). ({len(message_queue)} messages in the queue)')
 
 
+
 backMessageFour = ''
 backMessageThree = ''
 backMessageTwo = ''
@@ -430,7 +565,6 @@ while(previousTab == 0):
     web.grab_set()
     web.grab_release()
     web.focus_force()
-    web.update()
     web.title("ContentPlays")
     web.iconbitmap("icon.ico")
     web.geometry("525x350+700+300")
@@ -453,7 +587,7 @@ while(previousTab == 0):
                         font = ("Arial", 7))
 
 
-    web.protocol("WM_DELETE_WINDOW", close_window)
+    web.protocol("WM_DELETE_WINDOW", web_close_window)
     webText.place(x=155, y=50)
     twitchButton.place(x=120, y=100)
     youtubeButton.place(x=285, y=100)
@@ -466,7 +600,6 @@ while(previousTab == 0):
         platform.grab_set()
         platform.grab_release()
         platform.focus_force()
-        platform.update()
         platform.title("ContentPlays")
         platform.iconbitmap("icon.ico")
         platform.geometry("525x350+700+300")
@@ -500,7 +633,7 @@ while(previousTab == 0):
         nextButton.place(x=460, y = 290)
         backButton = Button(platform, text="Back",height = 2, width = 5, command = backTrackAccount)
         backButton.place(x=15, y = 290)
-        platform.protocol("WM_DELETE_WINDOW", close_window)
+        platform.protocol("WM_DELETE_WINDOW", platform_close_window)
         platform.mainloop()
         while(previousTab == 2):
             game = mtTkinter.Tk()
@@ -509,24 +642,70 @@ while(previousTab == 0):
             game.grab_set()
             game.grab_release()
             game.focus_force()
-            game.update()
             game.title("ContentPlays")
             game.iconbitmap("icon.ico")
             game.geometry("525x350+700+300")
             game.config(background = "white")
             game.minsize(525,350)
             game.maxsize(525,350)
+
             webText = Label(game, text="Select A Game",
                     bg = "white",
                     fg = "black",
                     font = ("Arial", 15))
             webText.place(x=175, y=50)
+
             minecraftButton = Button(game, text="Minecraft",height = 2, width = 7, command = minecraftSetting)
             minecraftButton.place(x=75, y = 100)
+
+            gameTwoButton = Button(game, text="Game 2",height = 2, width = 7, command = None)
+            gameTwoButton.place(x=150, y = 100)
+
+            gameThreeButton = Button(game, text="Game 3",height = 2, width = 7, command = None)
+            gameThreeButton.place(x=225, y = 100)
+
+            gameFourButton = Button(game, text="Game 4",height = 2, width = 7, command = None)
+            gameFourButton.place(x=300, y = 100)
+
+            gameFiveButton = Button(game, text="Game 5",height = 2, width = 7, command = None)
+            gameFiveButton.place(x=375, y = 100)
+
+            gameSixButton = Button(game, text="Game 6",height = 2, width = 7, command = None)
+            gameSixButton.place(x=75, y = 150)
+
+            gameSevenButton = Button(game, text="Game 7",height = 2, width = 7, command = None)
+            gameSevenButton.place(x=150, y = 150)
+
+            gameEightButton = Button(game, text="Game 8",height = 2, width = 7, command = None)
+            gameEightButton.place(x=225, y = 150)
+
+            gameNineButton = Button(game, text="Game 9",height = 2, width = 7, command = None)
+            gameNineButton.place(x=300, y = 150)
+
+            gameTenButton = Button(game, text="Game 10",height = 2, width = 7, command = None)
+            gameTenButton.place(x=375, y = 150)
+
+            gameElevenButton = Button(game, text="Game 11",height = 2, width = 7, command = None)
+            gameElevenButton.place(x=75, y = 200)
+
+            gameTwelveButton = Button(game, text="Game 12",height = 2, width = 7, command = None)
+            gameTwelveButton.place(x=150, y = 200)
+
+            gameThirteenButton = Button(game, text="Game 13",height = 2, width = 7, command = None)
+            gameThirteenButton.place(x=225, y = 200)
+
+            gameFourteenButton = Button(game, text="Game 14",height = 2, width = 7, command = None)
+            gameFourteenButton.place(x=300, y = 200)
+
+            customButton = Button(game, text="Custom",height = 2, width = 7, command = None)#customSetting
+            customButton.place(x=375, y = 200)
+
             backButton = Button(game, text="Back",height = 2, width = 5, command = backTrackPlatform)
             backButton.place(x=15, y = 290)
-            game.protocol("WM_DELETE_WINDOW", close_window)
+
+            game.protocol("WM_DELETE_WINDOW", game_close_window)
             game.mainloop()
+
             while(previousTab == 3):
                 start = mtTkinter.Tk()
                 start.lift()
@@ -534,13 +713,18 @@ while(previousTab == 0):
                 start.grab_set()
                 start.grab_release()
                 start.focus_force()
-                start.update()
                 start.title("ContentPlays")
                 start.iconbitmap("icon.ico")
                 start.geometry("525x350+700+300")
                 start.config(background = "white")
                 start.minsize(525,350)
                 start.maxsize(525,350)
+
+                menubar = Menu(start)
+                options = Menu(menubar, tearoff = 0)
+                menubar.add_cascade(label='Options', menu=options)
+                screenManager = ScreenManage()
+                options.add_command(label='Screen', command= screenManager.screenOption)
 
 
                 messageRelayOne = Label(start, text=backMessageOne,
@@ -568,7 +752,7 @@ while(previousTab == 0):
 
 
                 startButton = Button(start, text="Start",height = 2, width = 5, command = thread)
-                startButton.place(x=225, y = 290)
+                startButton.place(x=225, y = 280)
                 endButton = Button(start, text="End",height = 2, width = 5, command = endProgram)
 
                 if(gamesetting == 0):
@@ -631,13 +815,17 @@ while(previousTab == 0):
                     mouseMoveLeftButton.place(x=405, y=120)
                     mouseMoveRightButton.place(x=480, y=120)
 
-                endButton.place(x=275, y = 290)
+                #if(gamesetting == 99):
+
+
+                endButton.place(x=275, y = 280)
                 messageRelayOne.place(x= 5, y=200)
                 messageRelayTwo.place(x= 5, y=220)
                 messageRelayThree.place(x= 5, y=240)
                 messageRelayFour.place(x= 5, y=260)
                 messageRelayConnect.place(x=10, y=5)
-                start.protocol("WM_DELETE_WINDOW", close_window)
-                start.after(1, update)
+                start.protocol("WM_DELETE_WINDOW", start_close_window)
+                start.after(1000, updateMessage)
+                start.config(menu=menubar)
                 start.mainloop()
 exit()
