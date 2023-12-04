@@ -19,6 +19,8 @@ This code is originally based off Wituz's Twitch Plays template, then expanded b
 This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, DDarknut, Ottomated, and the original coder Wituz. I decided to further expand this program to allow people with little coding knowledge to have options and a GUI
 
 # Recent Features  
+- (Update: 12-4-23) Adding Future GUI (No Functionality Yet)  
+- (Update: 12-4-23) Screen Option bar to choose between monitors (Based on Screen Res. Example 1920x1080)  
 - (Update: 11-30-23) GUI Drift Fix  
 - (Update: 11-30-23) Failed Login Error Notification  
 - (Update: 11-26-23) Control View On Minecraft  
@@ -30,7 +32,7 @@ This is a forked version of the expanded Twitch/Youtube Plays done by DougDoug, 
 - Green screen controller  
 - Live Controller View for all game  
 - Custom Controller Options  
-- Screen Range Options  
+- Screen Range Options Buttons  
 - Pause Control Feature  
 - Create Pip Bash File  
 
