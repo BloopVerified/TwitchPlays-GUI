@@ -32,6 +32,7 @@ This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDark
 - More Games Options!!!  
 - Green screen controller  
 - Live Controller View for all game  
-- Create a Pip Bash File for fast installation   
+- Create a Pip Bash File for fast installation  
+- Duel Stream Connection  
 
 ### If you have any requests, feel free to comment, or commit some changes I will review/test it. Any outside questions about the code feel free to message me at @BloopCasual on Discord. (Please mention the code so I don't discard your message for spam.)
