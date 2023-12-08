@@ -27,7 +27,7 @@ This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDark
 
 ## Future Feature Coming Soon  
 - Custom Controller Options (Next Project)  
-- Screen Range Options Buttons  (Next Project)
+- Screen Range Options Buttons  (In Progress)
 - Pause Control Feature  
 - More Games Options!!!  
 - Green screen controller  
