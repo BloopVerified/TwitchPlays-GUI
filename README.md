@@ -11,6 +11,7 @@ python -m pip install requests
 python -m pip install mouse  
 python -m pip install tkinter  
 python -m pip install mttkinter  
+python -m pip install screeninfo  
 
 Once Python is set up, all you need to do is boot up the program and follow the prompts, and you'll be ready to go!
 
