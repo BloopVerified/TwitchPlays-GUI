@@ -102,19 +102,28 @@ class ScreenManage():
                 testing[z] = str(m)
                 z+= 1
             monitorOne = testing[0].split()
-            monitorHeight = monitorOne[3]
-            monitorHeight = monitorHeight.replace('height=','')
-            monitorHeight = monitorHeight.replace(',','')
-            monitorWidth = monitorOne[2]
-            monitorWidth = monitorWidth.replace('width=','')
-            monitorWidth = monitorWidth.replace(',','')
-            user32 = ctypes.windll.user32
-            user32.SetProcessDPIAware()
 
-            startX = 0
-            endX = monitorWidth
-            startY = 0
-            endY = monitorHeight
+            monitorStartHeight = monitorOne[1]
+            monitorStartHeight = monitorStartHeight.replace('y=','')
+            monitorStartHeight = monitorStartHeight.replace(',','')
+
+            monitorEndHeight = monitorOne[3]
+            monitorEndHeight = monitorEndHeight.replace('height=','')
+            monitorEndHeight = monitorEndHeight.replace(',','')
+
+            monitorStartWidth = monitorOne[0]
+            monitorStartWidth = monitorStartWidth.replace('Monitor(x=','')
+            monitorStartWidth = monitorStartWidth.replace(',','')
+
+            monitorEndWidth = monitorOne[2]
+            monitorEndWidth = monitorEndWidth.replace('width=','')
+            monitorEndWidth = monitorEndWidth.replace(',','')
+
+
+            startX = monitorStartWidth
+            endX = int(monitorEndWidth) + int(monitorStartWidth)
+            startY = monitorStartHeight
+            endY = int(monitorEndHeight) + int(monitorStartHeight)
         except Exception as e:
             startX = 0
             endX = 0
@@ -138,19 +147,29 @@ class ScreenManage():
                 testing[z] = str(m)
                 z+= 1
             monitorOne = testing[1].split()
-            monitorHeight = monitorOne[3]
-            monitorHeight = monitorHeight.replace('height=','')
-            monitorHeight = monitorHeight.replace(',','')
-            monitorWidth = monitorOne[2]
-            monitorWidth = monitorWidth.replace('width=','')
-            monitorWidth = monitorWidth.replace(',','')
-            user32 = ctypes.windll.user32
-            user32.SetProcessDPIAware()
 
-            startX = int(monitorWidth)
-            endX = int(monitorWidth) * 2
-            startY = 0
-            endY = monitorHeight
+            monitorStartHeight = monitorOne[1]
+            monitorStartHeight = monitorStartHeight.replace('y=','')
+            monitorStartHeight = monitorStartHeight.replace(',','')
+
+            monitorEndHeight = monitorOne[3]
+            monitorEndHeight = monitorEndHeight.replace('height=','')
+            monitorEndHeight = monitorEndHeight.replace(',','')
+
+            monitorStartWidth = monitorOne[0]
+            monitorStartWidth = monitorStartWidth.replace('Monitor(x=','')
+            monitorStartWidth = monitorStartWidth.replace(',','')
+
+            monitorEndWidth = monitorOne[2]
+            monitorEndWidth = monitorEndWidth.replace('width=','')
+            monitorEndWidth = monitorEndWidth.replace(',','')
+
+
+            startX = monitorStartWidth
+            endX = int(monitorEndWidth) + int(monitorStartWidth)
+            startY = monitorStartHeight
+            endY = int(monitorEndHeight) + int(monitorStartHeight)
+
         except Exception as e:
             startX = 0
             endX = 0
@@ -174,19 +193,28 @@ class ScreenManage():
                 testing[z] = str(m)
                 z+= 1
             monitorOne = testing[2].split()
-            monitorHeight = monitorOne[3]
-            monitorHeight = monitorHeight.replace('height=','')
-            monitorHeight = monitorHeight.replace(',','')
-            monitorWidth = monitorOne[2]
-            monitorWidth = monitorWidth.replace('width=','')
-            monitorWidth = monitorWidth.replace(',','')
-            user32 = ctypes.windll.user32
-            user32.SetProcessDPIAware()
 
-            startX = int(monitorWidth) * 2
-            endX = int(monitorWidth) * 3
-            startY = 0
-            endY = monitorHeight
+            monitorStartHeight = monitorOne[1]
+            monitorStartHeight = monitorStartHeight.replace('y=','')
+            monitorStartHeight = monitorStartHeight.replace(',','')
+
+            monitorEndHeight = monitorOne[3]
+            monitorEndHeight = monitorEndHeight.replace('height=','')
+            monitorEndHeight = monitorEndHeight.replace(',','')
+
+            monitorStartWidth = monitorOne[0]
+            monitorStartWidth = monitorStartWidth.replace('Monitor(x=','')
+            monitorStartWidth = monitorStartWidth.replace(',','')
+
+            monitorEndWidth = monitorOne[2]
+            monitorEndWidth = monitorEndWidth.replace('width=','')
+            monitorEndWidth = monitorEndWidth.replace(',','')
+
+
+            startX = monitorStartWidth
+            endX = int(monitorEndWidth) + int(monitorStartWidth)
+            startY = monitorStartHeight
+            endY = int(monitorEndHeight) + int(monitorStartHeight)
         except Exception as e:
             startX = 0
             endX = 0
