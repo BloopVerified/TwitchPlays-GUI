@@ -29,7 +29,7 @@ This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDark
 - (Update: 11-26-23) Colored prompts  
 
 ## Future Feature Coming Soon  
-- Custom Controller Options (Next Project)  
+- Custom Controller Options (In Progress)  
 - Pause Control Feature  
 - More Games Options!!!  
 - Green screen controller  
