@@ -18,6 +18,7 @@ Once Python is set up, all you need to do is boot up the program and follow the 
 This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDarknut, Ottomated, and the original Twitch/Youtube Plays coder Wituz. I decided to expand this program further to allow people with little coding knowledge to have pre-set and custom options with a basic but decent GUI.
 
 ## Recent Features  
+- (Update: 12-10-23) Full Monitor Layout Capabilities  
 - (Update: 12-9-23) Horizontal Monitor Option Buttons (3 Monitor Selection)  
 - (Update: 12-4-23) Adding Future GUI (No Functionality Yet)  
 - (Update: 12-4-23) Screen Option bar to choose between monitors (Based on Screen Res. Example 1920x1080)  
