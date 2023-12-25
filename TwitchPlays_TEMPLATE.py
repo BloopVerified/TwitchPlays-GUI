@@ -79,6 +79,7 @@ class ControlManage():
     macroFourTimerTwoCls = ''
     enterKeyCls = ''
     spaceKeyCls = ''
+    mimicControlBox = ''
     def __init__(self):
         self.upText = StringVar()
         self.downText = StringVar()
@@ -232,6 +233,7 @@ class ControlManage():
 
     def controlOption(self, start):
         controlOpt = mtTkinter.Tk()
+        ControlManage.mimicControlBox = controlOpt
         controlOpt.lift()
         controlOpt.attributes('-topmost', True)
         controlOpt.grab_set()
@@ -1278,6 +1280,7 @@ class ScreenManage():
     endXGet = ''
     startYGet = ''
     endYGet = ''
+    mimicScreenBox = ''
     def __init__(self):
         self.startX = StringVar()
         self.endX = StringVar()
@@ -1292,6 +1295,7 @@ class ScreenManage():
 
     def screenOption(self):
         screenRes = mtTkinter.Tk()
+        ScreenManage.mimicScreenBox = screenRes
         screenRes.lift()
         screenRes.attributes('-topmost', True)
         screenRes.grab_set()
@@ -1578,6 +1582,15 @@ class backgroundInfo():
         backgroundInfo.previousTab -= 1
         startButton["state"] = ACTIVE
         GreenScreen.greenScreenCls = False
+        try:
+            ControlManage.mimicControlBox.destroy()
+        except Exception as e:
+            None
+        try:
+            ScreenManage.mimicScreenBox.destroy()
+        except Exception as e:
+            None
+
         start.destroy()
 
     def twitch_Button(self):
@@ -2135,11 +2148,11 @@ def Program(eventRun=None):
     handleMessaging = TTA.handle_message
     # MESSAGE_RATE controls how fast we process incoming Twitch Chat messages. It's the number of seconds it will take to handle all messages in the queue.
     # This is used because Twitch delivers messages in "batches", rather than one at a time. So we process the messages over MESSAGE_RATE duration, rather than processing the entire batch at once.
-    # A smaller number means we go through the message queue faster, but we will run out of messages faster and activity might "stagnate" while waiting for a new batch. 
+    # A smaller number means we go through the message queue faster, but we will run out of messages faster and activity might "stagnate" while waiting for a new batch.
     # A higher number means we go through the queue slower, and messages are more evenly spread out, but delay from the viewers' perspective is higher.
     # You can set this to 0 to disable the queue and handle all messages immediately. However, then the wait before another "batch" of messages is more noticeable.
     MESSAGE_RATE = 0.5
-    # MAX_QUEUE_LENGTH limits the number of commands that will be processed in a given "batch" of messages. 
+    # MAX_QUEUE_LENGTH limits the number of commands that will be processed in a given "batch" of messages.
     # e.g. if you get a batch of 50 messages, you can choose to only process the first 10 of them and ignore the others.
     # This is helpful for games where too many inputs at once can actually hinder the gameplay.
     # Setting to ~50 is good for total chaos, ~5-10 is good for 2D platformers
