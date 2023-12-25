@@ -14,6 +14,28 @@ from mttkinter import *
 from screeninfo import get_monitors, Monitor
 import TwitchPlays_Connection
 
+class GreenScreen():
+    greenScreenCls = False
+    def greenScreenChange(self):
+        if(GreenScreen.greenScreenCls == False):
+            GreenScreen.greenScreenCls = True
+            start['bg'] = 'lime'
+            messageRelayConnect['bg'] = 'lime'
+            messageRelayOne['bg'] = 'lime'
+            messageRelayTwo['bg'] = 'lime'
+            messageRelayThree['bg'] = 'lime'
+            messageRelayFour['bg'] = 'lime'
+
+        else:
+            GreenScreen.greenScreenCls = False
+            start['bg'] = 'white'
+            messageRelayConnect['bg'] = 'white'
+            messageRelayOne['bg'] = 'white'
+            messageRelayTwo['bg'] = 'white'
+            messageRelayThree['bg'] = 'white'
+            messageRelayFour['bg'] = 'white'
+
+
 class ControlManage():
     upKeyCls = ''
     downKeyCls = ''
@@ -745,9 +767,11 @@ class ControlManage():
     def alt_closeControl_close_window(self, controlOpt):
         try:
             controlOpt.destroy()
+            GreenScreen.greenScreenCls = False
             start.destroy()
             exit()
         except Exception as e:
+            GreenScreen.greenScreenCls = False
             start.destroy()
             exit()
 
@@ -1553,6 +1577,7 @@ class backgroundInfo():
             backgroundInfo.updateClear(self)
         backgroundInfo.previousTab -= 1
         startButton["state"] = ACTIVE
+        GreenScreen.greenScreenCls = False
         start.destroy()
 
     def twitch_Button(self):
@@ -1567,6 +1592,7 @@ class backgroundInfo():
 
     def start_close_window(self):
         #thread()
+        GreenScreen.greenScreenCls = False
         start.destroy()
         exit()
 
@@ -2205,6 +2231,8 @@ sendThread = sendInfo.thread
 sendProgram = sendInfo.endProgram
 sendStartClose = sendInfo.start_close_window
 sendUpdateMessage = sendInfo.updateMessage
+greenScreenMode = GreenScreen()
+GSMode = greenScreenMode.greenScreenChange
 while(backgroundInfo.previousTab == 0):
     web = mtTkinter.Tk()
     web.lift()
@@ -2568,7 +2596,7 @@ while(backgroundInfo.previousTab == 0):
                     startButton.place(x=250, y=280)
                     endButton.place(x=300, y=280)
 
-
+                options.add_command(label='GS Mode', command=GSMode)
                 messageRelayOne.place(x= 5, y=200)
                 messageRelayTwo.place(x= 5, y=220)
                 messageRelayThree.place(x= 5, y=240)
