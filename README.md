@@ -18,6 +18,7 @@ Once Python is set up, all you need to do is boot up the program and follow the 
 This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDarknut, Ottomated, and the original Twitch/Youtube Plays coder Wituz. I decided to expand this program further to allow people with little coding knowledge to have pre-set and custom options with a basic but decent GUI.
 
 ## Recent Features  
+- (Update: 12-27-23) Duel Casting for Youtube and Twitch  
 - (Update: 12-25-23) Custom Controller Settings & No More Globals & Green Screen Mode  
 - (Update: 12-10-23) Python Pip File (You can add them yourself if you don't trust batch files)  
 - (Update: 12-10-23) Full Monitor Layout Capabilities  
@@ -33,7 +34,6 @@ This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDark
 ## Future Feature Coming Soon  
 - Pause Control Feature  
 - More Games Options!!!   
-- Live Controller View for all game  
-- Duel Stream Connection  
+- Live Controller View for all game   
 
 ### If you have any requests, feel free to comment, or commit some changes I will review/test it. Any outside questions about the code feel free to message me at @BloopCasual on Discord. (Please mention the code so I don't discard your message for spam.)
