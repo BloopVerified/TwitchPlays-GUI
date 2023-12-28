@@ -2,6 +2,7 @@ import concurrent.futures
 import ctypes
 import threading as threading
 import time
+import tkinter
 from functools import partial
 from tkinter import *
 from tkinter.ttk import Combobox
@@ -13,6 +14,317 @@ import pydirectinput
 from mttkinter import *
 from screeninfo import get_monitors, Monitor
 import TwitchPlays_Connection
+
+class MouseManage():
+    mimicMouseBox = ''
+    moveMouseUp = 45
+    moveMouseDown = 45
+    moveMouseRight = 45
+    moveMouseLeft = 45
+    textMouseUp = ''
+    textMouseDown = ''
+    textMouseRight = ''
+    textMouseLeft = ''
+    rightClick = ''
+    rightClickValue = ''
+    leftClick = ''
+    leftClickValue = ''
+
+    def __init__(self):
+        self.upMouse = None
+        self.downMouse = None
+        self.leftMouse = None
+        self.rightMouse = None
+
+        self.mouseUpText = StringVar()
+        self.mouseUpText.set('')
+        self.mouseDownText = StringVar()
+        self.mouseDownText.set('')
+        self.mouseRightText = StringVar()
+        self.mouseRightText.set('')
+        self.mouseLeftText = StringVar()
+        self.mouseLeftText.set('')
+        self.keyOptions = ('none','left', 'right')
+
+        self.leftClickText = StringVar()
+        self.leftClickKey = StringVar()
+        self.rightClickText = StringVar()
+        self.rightClickKey = StringVar()
+        self.leftClickText.set('')
+        self.leftClickKey.set('0')
+        self.rightClickText.set('')
+        self.rightClickKey.set('0')
+        self.upM = StringVar()
+        self.upM.set('45')
+        self.downM = StringVar()
+        self.downM.set('45')
+        self.leftM = StringVar()
+        self.leftM.set('45')
+        self.rightM = StringVar()
+        self.rightM.set('45')
+
+    def mouseOption(self, start):
+        mouseOpt = mtTkinter.Tk()
+        MouseManage.mimicMouseBox = mouseOpt
+        mouseOpt.lift()
+        mouseOpt.attributes('-topmost', True)
+        mouseOpt.grab_set()
+        mouseOpt.grab_release()
+        mouseOpt.focus_force()
+        mouseOpt.title("ContentPlays")
+        mouseOpt.iconbitmap("icon.ico")
+        mouseOpt.geometry("500x500+700+300")
+        mouseOpt.config(background="white")
+        mouseOpt.minsize(500, 500)
+        mouseOpt.maxsize(500, 500)
+
+        mouseUp = Label(mouseOpt, text="Mouse:",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 9))
+        mouseUp.place(x=40, y=35)
+
+        mouseUp = Label(mouseOpt, text="Chat Text:",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 9))
+        mouseUp.place(x=120, y=35)
+
+        mouseUp = Label(mouseOpt, text="Movement:",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 9))
+        mouseUp.place(x=200, y=35)
+
+
+#Mouse Up
+        mouseUp = Label(mouseOpt, text="Mouse Up:",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 9))
+        mouseUp.place(x=40, y=60)
+
+        mouseUpTextEntry = Entry(mouseOpt, width=12, textvariable=self.mouseUpText)
+        mouseUpTextEntry.place(x=120, y=60)
+
+        self.upMouse = IntVar(mouseOpt)
+        self.upMouse.set(value=int(self.upM.get()))
+        mouseUpEntry = Spinbox(mouseOpt, from_= 0, to = 180, textvariable=self.upMouse)
+        mouseUpEntry.place(x=200, y=60)
+
+#Mouse Down
+        mouseDown = Label(mouseOpt, text="Mouse Down:",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 9))
+        mouseDown.place(x=40, y=85)
+
+        mouseDownTextEntry = Entry(mouseOpt, width=12, textvariable=self.mouseDownText)
+        mouseDownTextEntry.place(x=120, y=85)
+
+        self.downMouse = IntVar(mouseOpt)
+        self.downMouse.set(value=int(self.downM.get()))
+        mouseDownEntry = Spinbox(mouseOpt, from_= 0, to = 180, textvariable=self.downMouse)
+        mouseDownEntry.place(x=200, y=85)
+# Mouse Right
+        mouseRight = Label(mouseOpt, text="Mouse Right:",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 9))
+        mouseRight.place(x=40, y=110)
+
+        mouseRightTextEntry = Entry(mouseOpt, width=12, textvariable=self.mouseRightText)
+        mouseRightTextEntry.place(x=120, y=110)
+
+        self.rightMouse = IntVar(mouseOpt)
+        self.rightMouse.set(value=int(self.rightM.get()))
+        mouseRightEntry = Spinbox(mouseOpt, from_= 0, to = 180, textvariable=self.rightMouse)
+        mouseRightEntry.place(x=200, y=110)
+
+# Mouse Left
+        mouseLeft = Label(mouseOpt, text="Mouse Left :",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 9))
+        mouseLeft.place(x=40, y=135)
+
+        mouseLeftTextEntry = Entry(mouseOpt, width=12, textvariable=self.mouseLeftText)
+        mouseLeftTextEntry.place(x=120, y=135)
+
+        self.leftMouse = IntVar(mouseOpt)
+        self.leftMouse.set(value=int(self.leftM.get()))
+        mouseLeftEntry = Spinbox(mouseOpt, from_= 0, to = 180, textvariable=self.leftMouse)
+        mouseLeftEntry.place(x=200, y=135)
+
+#Left Click
+        leftClick = Label(mouseOpt, text="Left Click:",
+                        bg="white",
+                        fg="black",
+                        font=("Arial", 9))
+        leftClick.place(x=40, y=160)
+
+        leftClickTextEntry = Entry(mouseOpt, width=12, textvariable=self.leftClickText)
+        leftClickTextEntry.place(x=120, y=160)
+
+        leftClickCombo = Combobox(mouseOpt, width=10, textvariable=self.leftClickKey, values=self.keyOptions)
+        leftClickCombo.place(x=200, y=160)
+
+# Right Click
+        rightClick = Label(mouseOpt, text="Right Click:",
+                          bg="white",
+                          fg="black",
+                          font=("Arial", 9))
+        rightClick.place(x=40, y=185)
+
+        rightClickTextEntry = Entry(mouseOpt, width=12, textvariable=self.rightClickText)
+        rightClickTextEntry.place(x=120, y=185)
+
+        rightClickCombo = Combobox(mouseOpt, width=10, textvariable=self.rightClickKey , values=self.keyOptions)
+        rightClickCombo.place(x=200, y=185)
+
+
+
+# Mouse Icon
+        mousePalmButton = Button(mouseOpt, text="", height=2, width=5, state=DISABLED)
+        mouseLeftButton = Button(mouseOpt, text="L", height=1, width=2, state=DISABLED)
+        mouseRightButton = Button(mouseOpt, text="R", height=1, width=2, state=DISABLED)
+        mousePalmButton.place(x=400, y=75)
+        mouseLeftButton.place(x=400, y=50)
+        mouseRightButton.place(x=421, y=50)
+
+        mouseMoveUpButton = Button(mouseOpt, text="↑", height=1, width=1, state=DISABLED)
+        mouseMoveDownButton = Button(mouseOpt, text="↓", height=1, width=1, state=DISABLED)
+        mouseMoveLeftButton = Button(mouseOpt, text="←", height=1, width=1, state=DISABLED)
+        mouseMoveRightButton = Button(mouseOpt, text="→", height=1, width=1, state=DISABLED)
+        mouseMoveUpButton.place(x=415, y=20)
+        mouseMoveDownButton.place(x=415, y=120)
+        mouseMoveLeftButton.place(x=375, y=70)
+        mouseMoveRightButton.place(x=450, y=70)
+
+#Mouse Manage Functions
+        submitControl = partial(MouseManage.submitMouse, self, mouseOpt, mouseUpEntry, mouseDownEntry, mouseRightEntry, mouseLeftEntry, mouseUpTextEntry, mouseDownTextEntry, mouseRightTextEntry, mouseLeftTextEntry,leftClickTextEntry,leftClickCombo,rightClickTextEntry,rightClickCombo)
+        submitButton = Button(mouseOpt, text='Submit', command=submitControl)
+        submitButton.place(x=195, y=450)
+        clearControl = partial(MouseManage.clearMouse, self, mouseUpEntry, mouseDownEntry, mouseRightEntry, mouseLeftEntry, mouseUpTextEntry, mouseDownTextEntry, mouseRightTextEntry, mouseLeftTextEntry,leftClickTextEntry,leftClickCombo,rightClickTextEntry,rightClickCombo)
+        clearButton = Button(mouseOpt, text='Clear', command=clearControl)
+        clearButton.place(x=255, y=450)
+        mouseOpt.after(1, MouseManage.updateMouse, self, mouseOpt, mouseUpTextEntry, mouseDownTextEntry, mouseRightTextEntry, mouseLeftTextEntry, leftClickTextEntry,leftClickCombo,rightClickTextEntry,rightClickCombo)
+        closeMouse = partial(MouseManage.closeMouse_close_window, self, mouseOpt)
+        mouseOpt.protocol("WM_DELETE_WINDOW", closeMouse)
+        startcloseMouse = partial(MouseManage.alt_closeMouse_close_window, self, mouseOpt)
+        start.protocol("WM_DELETE_WINDOW", startcloseMouse)
+
+    def closeMouse_close_window(self, mouseOpt):
+        mouseOpt.destroy()
+
+    def alt_closeMouse_close_window(self, mouseOpt):
+        try:
+            mouseOpt.destroy()
+            GreenScreen.greenScreenCls = False
+            start.destroy()
+            exit()
+        except Exception as e:
+            GreenScreen.greenScreenCls = False
+            start.destroy()
+            exit()
+
+    def submitMouse(self, mouseOpt, mouseUpEntry, mouseDownEntry, mouseRightEntry, mouseLeftEntry, mouseUpTextEntry, mouseDownTextEntry, mouseRightTextEntry, mouseLeftTextEntry,leftClickTextEntry,leftClickCombo,rightClickTextEntry,rightClickCombo):
+        if(mouseUpTextEntry.get() != ''):
+            self.upM.set(self.upMouse.get())
+            self.mouseUpText.set(mouseUpTextEntry.get())
+            MouseManage.moveMouseUp = self.upMouse.get()
+            MouseManage.textMouseUp = mouseUpTextEntry.get()
+        else:
+            self.upM.set('45')
+            self.mouseUpText.set('')
+            MouseManage.moveMouseUp = 45
+            MouseManage.textMouseUp = ''
+
+        if(mouseDownTextEntry.get() != ''):
+            self.downM.set(self.downMouse.get())
+            self.mouseDownText.set(mouseDownTextEntry.get())
+            MouseManage.moveMouseDown = self.downMouse.get()
+            MouseManage.textMouseDown = mouseDownTextEntry.get()
+        else:
+            self.downM.set('45')
+            self.mouseDownText.set('')
+            MouseManage.moveMouseDown = 45
+            MouseManage.textMouseDown = ''
+
+        if(mouseRightTextEntry.get() != ''):
+            self.rightM.set(self.rightMouse.get())
+            self.mouseRightText.set(mouseRightTextEntry.get())
+            MouseManage.moveMouseRight = self.rightMouse.get()
+            MouseManage.textMouseRight = mouseRightTextEntry.get()
+        else:
+            self.rightM.set('45')
+            self.mouseRightText.set('')
+            MouseManage.moveMouseRight = 45
+            MouseManage.textMouseRight = ''
+
+        if(mouseLeftTextEntry.get() != ''):
+            self.leftM.set(self.leftMouse.get())
+            self.mouseLeftText.set(mouseLeftTextEntry.get())
+            MouseManage.moveMouseLeft = self.leftMouse.get()
+            MouseManage.textMouseLeft = mouseLeftTextEntry.get()
+        else:
+            self.leftM.set('45')
+            self.mouseLeftText.set('')
+            MouseManage.moveMouseLeft = 45
+            MouseManage.textMouseLeft = ''
+
+        if(leftClickTextEntry.get() != ''):
+            self.leftClickText.set(leftClickTextEntry.get())
+            MouseManage.leftClick = leftClickTextEntry.get()
+            MouseManage.leftClickValue = leftClickCombo.get()
+            index = self.keyOptions.index(leftClickCombo.get())
+            self.leftClickKey.set(str(index))
+        else:
+            self.leftClickText.set('')
+            MouseManage.leftClick = ''
+            MouseManage.leftClickValue = ''
+            self.leftClickKey.set('0')
+        if(rightClickTextEntry.get() != ''):
+            self.rightClickText.set(rightClickTextEntry.get())
+            MouseManage.rightClick = rightClickTextEntry.get()
+            MouseManage.rightClickValue = rightClickCombo.get()
+            index = self.keyOptions.index(rightClickCombo.get())
+            self.rightClickKey.set(str(index))
+        else:
+            self.rightClickText.set('')
+            MouseManage.rightClick = ''
+            MouseManage.rightClickValue = ''
+            self.rightClickKey.set('0')
+
+        mouseOpt.destroy()
+
+    def updateMouse(self, mouseOpt, mouseUpTextEntry, mouseDownTextEntry, mouseRightTextEntry, mouseLeftTextEntry,leftClickTextEntry,leftClickCombo,rightClickTextEntry,rightClickCombo):
+        mouseUpTextEntry.insert(END, self.mouseUpText.get())
+        mouseDownTextEntry.insert(END, self.mouseDownText.get())
+        mouseRightTextEntry.insert(END, self.mouseRightText.get())
+        mouseLeftTextEntry.insert(END, self.mouseLeftText.get())
+        leftClickTextEntry.insert(END, self.leftClickText.get())
+        rightClickTextEntry.insert(END, self.rightClickText.get())
+        leftClickCombo.current(self.leftClickKey.get())
+        rightClickCombo.current(self.rightClickKey.get())
+
+
+    def clearMouse(self, mouseUpEntry, mouseDownEntry, mouseRightEntry, mouseLeftEntry, mouseUpTextEntry, mouseDownTextEntry, mouseRightTextEntry, mouseLeftTextEntry, leftClickTextEntry,leftClickCombo,rightClickTextEntry,rightClickCombo):
+        self.upMouse.set(0)
+        self.downMouse.set(0)
+        self.rightMouse.set(0)
+        self.leftMouse.set(0)
+        leftClickCombo.current(0)
+        rightClickCombo.current(0)
+        mouseUpTextEntry.delete(0, END)
+        mouseDownTextEntry.delete(0, END)
+        mouseRightTextEntry.delete(0, END)
+        mouseLeftTextEntry.delete(0, END)
+        leftClickTextEntry.delete(0, END)
+        rightClickTextEntry.delete(0, END)
+
+
+
 
 class GreenScreen():
     greenScreenCls = False
@@ -158,7 +470,7 @@ class ControlManage():
         self.macroTwoTimerTwo.set('0')
         self.macroThreeTimerTwo.set('0')
         self.macroFourTimerTwo.set('0')
-        self.keyOptions = ('none','q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m','1','2','3','4','5','6','7','8','9','0','[', ']','\\','-','+',';','\'','`',',','.','/','Backspace','Control','Alt','Spacebar','Enter','Shift','Up Arrow','Down Arrow','Right Button','Left Arrow')
+        self.keyOptions = ('none','q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m','1','2','3','4','5','6','7','8','9','0','[', ']','\\','-','+',';','\'','`',',','.','/','del','ctrl','alt','spacebar','enter','shift','up','down','right','left')
 
         self.upKeyValue = StringVar()
         self.downKeyValue = StringVar()
@@ -245,10 +557,6 @@ class ControlManage():
         controlOpt.config(background="white")
         controlOpt.minsize(600, 650)
         controlOpt.maxsize(600, 650)
-        youtubePhoto = PhotoImage(file="youtube.png")
-        youtubeResize = youtubePhoto.subsample(3, 3)
-        twitchPhoto = PhotoImage(file="twitch.png")
-        twitchResize = twitchPhoto.subsample(3, 3)
 
         movementText = Label(controlOpt, text="Movement Keys",
                         bg="white",
@@ -1520,6 +1828,7 @@ class backgroundInfo():
     previousTab = 0
     TWITCH_CHANNEL = ''
     STREAMING_ON_TWITCH = False
+    STREAMING_ON_YOUTUBE = False
     YOUTUBE_STREAM_URL = None
     YOUTUBE_CHANNEL_ID = ''
     twitchActive = False
@@ -1529,6 +1838,7 @@ class backgroundInfo():
     backMessageTwo = ''
     backMessageOne = ''
     t = ''
+    y = ''
     t1 = None
     gamesetting = 0
     def backTrackAccount(self):
@@ -1537,6 +1847,7 @@ class backgroundInfo():
         backgroundInfo.STREAMING_ON_TWITCH = False
         backgroundInfo.YOUTUBE_CHANNEL_ID = ''
         backgroundInfo.YOUTUBE_STREAM_URL = None
+        backgroundInfo.STREAMING_ON_YOUTUBE = False
         backgroundInfo.twitchActive = False
         backgroundInfo.youtubeActive = False
         backgroundInfo.gamesetting = 0
@@ -1576,12 +1887,17 @@ class backgroundInfo():
 
 
     def endProgram(self):
-        backgroundInfo.t=''
-        if(backgroundInfo.t == ''):
+        backgroundInfo.t = ''
+        backgroundInfo.y = ''
+        if(backgroundInfo.t == '' or backgroundInfo.y == ''):
             backgroundInfo.updateClear(self)
         backgroundInfo.previousTab -= 1
         startButton["state"] = ACTIVE
         GreenScreen.greenScreenCls = False
+        try:
+            MouseManage.mimicMouseBox.destroy()
+        except Exception as e:
+            None
         try:
             ControlManage.mimicControlBox.destroy()
         except Exception as e:
@@ -1590,7 +1906,6 @@ class backgroundInfo():
             ScreenManage.mimicScreenBox.destroy()
         except Exception as e:
             None
-
         start.destroy()
 
     def twitch_Button(self):
@@ -1601,6 +1916,12 @@ class backgroundInfo():
     def youtube_Button(self):
         backgroundInfo.previousTab = 1
         backgroundInfo.youtubeActive = True
+        web.destroy()
+
+    def youtubeAndTwitch_Button(self):
+        backgroundInfo.previousTab = 1
+        backgroundInfo.youtubeActive = True
+        backgroundInfo.twitchActive = True
         web.destroy()
 
     def start_close_window(self):
@@ -1624,15 +1945,17 @@ class backgroundInfo():
     def WebSite(self):
         # Replace this with your Twitch username. Must be all lowercase.
         backgroundInfo.TWITCH_CHANNEL = ''
-        backgroundInfo.STREAMING_ON_TWITCH =  False
+        backgroundInfo.STREAMING_ON_TWITCH = False
         backgroundInfo.YOUTUBE_CHANNEL_ID = ''
         backgroundInfo.YOUTUBE_STREAM_URL = None
-        if(backgroundInfo.youtubeActive == True):
+        backgroundInfo.STREAMING_ON_YOUTUBE = False
+
+        if(backgroundInfo.youtubeActive == True and backgroundInfo.twitchActive == False):
             usernameAccess = username.get()
             channelURL = youtubeURL.get()
-        if(backgroundInfo.twitchActive == True):
+        if(backgroundInfo.twitchActive == True and backgroundInfo.youtubeActive == False):
             usernameAccess = username.get()
-        if(backgroundInfo.twitchActive == True):
+        if(backgroundInfo.twitchActive == True and backgroundInfo.youtubeActive == False):
             backgroundInfo.TWITCH_CHANNEL = usernameAccess
 
             # If streaming on Youtube, set this to False
@@ -1640,17 +1963,35 @@ class backgroundInfo():
 
         # If you're streaming on Youtube, replace this with your Youtube's Channel ID
         # Find this by clicking your Youtube profile pic -> Settings -> Advanced Settings
-        if(backgroundInfo.youtubeActive == True):
+        if(backgroundInfo.youtubeActive == True and backgroundInfo.twitchActive == False):
             backgroundInfo.YOUTUBE_CHANNEL_ID = usernameAccess
 
             # If you're using an Unlisted stream to test on Youtube, replace "None" below with your stream's URL in quotes.
             # Otherwise you can leave this as "None"
             backgroundInfo.YOUTUBE_STREAM_URL = channelURL
-        if(backgroundInfo.YOUTUBE_CHANNEL_ID != None and backgroundInfo.youtubeActive == True):
+
+        if(backgroundInfo.youtubeActive == True and backgroundInfo.twitchActive == True):
+            backgroundInfo.STREAMING_ON_TWITCH = backgroundInfo.twitchActive
+            backgroundInfo.STREAMING_ON_YOUTUBE = backgroundInfo.youtubeActive
+
+            youtubeUsernameAccess = username.get()
+            youtubeChannelURL = youtubeURL.get()
+
+            twitchUsernameAccess = username.get()
+
+            backgroundInfo.YOUTUBE_STREAM_URL = youtubeChannelURL
+            backgroundInfo.YOUTUBE_CHANNEL_ID = youtubeUsernameAccess
+            backgroundInfo.TWITCH_CHANNEL = twitchUsernameAccess
+
+        if(backgroundInfo.YOUTUBE_CHANNEL_ID != None and backgroundInfo.youtubeActive == True and backgroundInfo.twitchActive == True):
+            if(youtubeUsernameAccess != '' and youtubeChannelURL !=  '' and twitchUsernameAccess != ''):
+                backgroundInfo.previousTab = 2
+                platform.destroy()
+        if(backgroundInfo.YOUTUBE_CHANNEL_ID != None and backgroundInfo.youtubeActive == True and backgroundInfo.twitchActive == False):
             if(usernameAccess != '' and channelURL !=  ''):
                 backgroundInfo.previousTab = 2
                 platform.destroy()
-        if(backgroundInfo.STREAMING_ON_TWITCH == True and backgroundInfo.twitchActive == True):
+        if(backgroundInfo.STREAMING_ON_TWITCH == True and backgroundInfo.twitchActive == True and backgroundInfo.youtubeActive == False):
             if(usernameAccess != ''):
                 backgroundInfo.previousTab = 2
                 platform.destroy()
@@ -1674,7 +2015,7 @@ class TextToAction():
     TTAFour = ''
     def handle_message(self, message):
         controller = ControlManage()
-
+        mousemove = MouseManage()
         ScreenXStartEntry = 0
         ScreenXEndEntry = 0
         ScreenYStartEntry = 0
@@ -1756,6 +2097,14 @@ class TextToAction():
                 elif(msg.lower() == 'shiftoff' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     pydirectinput.keyUp('shift')
                     shiftButton['bg'] = '#f0f0f0'
+
+                elif(msg.lower() == 'controlon' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    pydirectinput.keyDown('control')
+                    controlButton['bg'] = 'red'
+                elif(msg.lower() == 'controloff' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    pydirectinput.keyUp('control')
+                    controlButton['bg'] = '#f0f0f0'
+
                 elif(msg.lower() == '1' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     oneButton['bg'] = 'red'
                     keyboard.press("1")
@@ -2099,32 +2448,32 @@ class TextToAction():
                     keyboard.release(controller.macroFourKeyTwoCls)
                     macroFourButton['bg'] = '#f0f0f0'
 
-                elif(msg.lower() == 'rt' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                elif(msg.lower() == MouseManage.textMouseRight and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     mouseMoveRightButton['bg'] = 'red'
-                    mouse.move(45, 0, False, .1)
+                    mouse.move(int("" + str(mousemove.moveMouseRight)), 0, False, .1)
                     mouseMoveRightButton['bg'] = '#f0f0f0'
-                elif(msg.lower() == 'lt' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                elif(msg.lower() == MouseManage.textMouseLeft and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     mouseMoveLeftButton['bg'] = 'red'
-                    mouse.move(-45, 0, False, .1)
+                    mouse.move(int("-" + str(mousemove.moveMouseLeft)), 0, False, .1)
                     mouseMoveLeftButton['bg'] = '#f0f0f0'
-                elif(msg.lower() == 'ut' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                elif(msg.lower() == MouseManage.textMouseUp and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     mouseMoveUpButton['bg'] = 'red'
-                    mouse.move(0, -45, False, .1)
+                    mouse.move(0, int("-" + str(mousemove.moveMouseUp)), False, .1)
                     mouseMoveUpButton['bg'] = '#f0f0f0'
-                elif(msg.lower() == 'dt'and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                elif(msg.lower() == MouseManage.textMouseDown and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     mouseMoveDownButton['bg'] = 'red'
-                    mouse.move(0, 45, False, .1)
+                    mouse.move(0, int("" + str(mousemove.moveMouseDown)), False, .1)
                     mouseMoveDownButton['bg'] = '#f0f0f0'
-                elif(msg.lower() == 'lc' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                elif(msg.lower() == MouseManage.leftClick and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     mouseLeftButton['bg'] = 'red'
-                    mouse.press("left")
-                    mouse.release("left")
+                    mouse.press(MouseManage.leftClickValue)
+                    mouse.release(MouseManage.leftClickValue)
                     time.sleep(1)
                     mouseLeftButton['bg'] = '#f0f0f0'
-                elif(msg.lower() == 'rc' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                elif(msg.lower() == MouseManage.rightClick and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     mouseRightButton['bg'] = 'red'
-                    mouse.press("right")
-                    mouse.release("right")
+                    mouse.press(MouseManage.rightClickValue)
+                    mouse.release(MouseManage.rightClickValue)
                     time.sleep(1)
                     mouseRightButton['bg'] = '#f0f0f0'
 
@@ -2163,6 +2512,7 @@ def Program(eventRun=None):
     message_queue = []
     thread_pool = concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS)
     active_tasks = []
+    alt_active_tasks = []
     pyautogui.FAILSAFE = False
 
     ##########################################################
@@ -2175,14 +2525,20 @@ def Program(eventRun=None):
         time.sleep(1)
 
     try:
-        if (backgroundInfo.STREAMING_ON_TWITCH and backgroundInfo.previousTab == 3):
+        if (backgroundInfo.twitchActive == True and backgroundInfo.youtubeActive != True and backgroundInfo.previousTab == 3):
             backgroundInfo.t = TwitchPlays_Connection.Twitch()
             backgroundInfo.t.twitch_connect(backgroundInfo.TWITCH_CHANNEL)
             messageRelayConnect.config(text='Connected To Twitch')
-        elif(backgroundInfo.previousTab == 3):
+        elif(backgroundInfo.youtubeActive == True and backgroundInfo.twitchActive != True and backgroundInfo.previousTab == 3):
             backgroundInfo.t = TwitchPlays_Connection.YouTube()
             backgroundInfo.t.youtube_connect(backgroundInfo.YOUTUBE_CHANNEL_ID, backgroundInfo.YOUTUBE_STREAM_URL)
             messageRelayConnect.config(text='Connected To Youtube')
+        elif(backgroundInfo.twitchActive == True and backgroundInfo.youtubeActive == True and backgroundInfo.previousTab == 3):
+            backgroundInfo.t = TwitchPlays_Connection.Twitch()
+            backgroundInfo.t.twitch_connect(backgroundInfo.TWITCH_CHANNEL)
+            backgroundInfo.y = TwitchPlays_Connection.YouTube()
+            backgroundInfo.y.youtube_connect(backgroundInfo.YOUTUBE_CHANNEL_ID, backgroundInfo.YOUTUBE_STREAM_URL)
+            messageRelayConnect.config(text='Connected To Twitch and Youtube')
         endButton["state"] = ACTIVE
         startButton['bg'] = 'light green'
     except Exception as e:
@@ -2190,15 +2546,25 @@ def Program(eventRun=None):
         endButton["state"] = ACTIVE
         startButton['bg'] = 'red'
 
-    while(True):
+    while(True and backgroundInfo.previousTab == 3):
         t = backgroundInfo.t
+        y = backgroundInfo.y
         active_tasks = [t for t in active_tasks if not t.done()]
+        alt_active_tasks = [y for y in alt_active_tasks if not y.done()]
 
         #Check for new messages
         new_messages = t.twitch_receive_messages()
+
+        if(backgroundInfo.STREAMING_ON_TWITCH == True and backgroundInfo.STREAMING_ON_YOUTUBE == True):
+            alt_new_messages = y.twitch_receive_messages()
+        else:
+            alt_new_messages = None
         if new_messages:
             message_queue += new_messages; # New messages are added to the back of the queue
             message_queue = message_queue[-MAX_QUEUE_LENGTH:] # Shorten the queue to only the most recent X messages
+        if backgroundInfo.STREAMING_ON_TWITCH == True and backgroundInfo.STREAMING_ON_YOUTUBE == True and alt_new_messages != None:
+            message_queue += alt_new_messages;
+            message_queue = message_queue[-MAX_QUEUE_LENGTH:]
 
         messages_to_handle = []
         if not message_queue:
@@ -2224,6 +2590,8 @@ def Program(eventRun=None):
             for message in messages_to_handle:
                 if len(active_tasks) <= MAX_WORKERS:
                     active_tasks.append(thread_pool.submit(handleMessaging, message))
+                elif len(alt_active_tasks) <= MAX_WORKERS:
+                    alt_active_tasks.append(thread_pool.submit(handleMessaging, message))
                 else:
                     print(f'WARNING: active tasks ({len(active_tasks)}) exceeds number of workers ({MAX_WORKERS}). ({len(message_queue)} messages in the queue)')
 
@@ -2232,6 +2600,7 @@ def Program(eventRun=None):
 sendInfo = backgroundInfo()
 sendTwitch = sendInfo.twitch_Button
 sendYoutube = sendInfo.youtube_Button
+sendTwitchAndYoutube = sendInfo.youtubeAndTwitch_Button
 sendClose = sendInfo.web_close_window
 sendWebSite = sendInfo.WebSite
 sendBackTrackAccount = sendInfo.backTrackAccount
@@ -2267,8 +2636,9 @@ while(backgroundInfo.previousTab == 0):
                         bg = "white",
                         fg = "black",
                         font = ("Arial", 17))
-    twitchButton = Button(web,height = 140, width = 100, text="Twitch",font = ("Arial", 12), image= twitchResize,compound = TOP, command = sendTwitch)
-    youtubeButton = Button(web,height = 140, width = 100, text="Youtube",font = ("Arial", 12), image= youtubeResize,compound = TOP, command= sendYoutube)
+    twitchButton = Button(web,height = 1, width = 10, text="Twitch",font = ("Arial", 12),compound = TOP, command = sendTwitch)#, image= twitchResize, height = 140, width = 100)
+    youtubeButton = Button(web,height = 1, width = 10, text="Youtube",font = ("Arial", 12),compound = TOP, command= sendYoutube)#, image= youtubeResize), height = 140, width = 100)
+    twitchAndYoutubeButton = Button(web,height = 1, width = 20, text="Both Twitch and Youtube",font = ("Arial", 12),compound = TOP, command= sendTwitchAndYoutube)
     thanks = Label(web, text="Original code by Wituz, updated by DDarknut, DougDoug, Ottomated. Further expanded by Bloop",
                         bg = "white",
                         fg = "black",
@@ -2279,6 +2649,8 @@ while(backgroundInfo.previousTab == 0):
     webText.place(x=155, y=50)
     twitchButton.place(x=120, y=100)
     youtubeButton.place(x=285, y=100)
+    #twitchAndYoutubeButton.place(x=162, y=260)
+    twitchAndYoutubeButton.place(x=162, y=160)
     thanks.place(x=0, y=330)
     web.mainloop()
     while(backgroundInfo.previousTab == 1):
@@ -2294,7 +2666,32 @@ while(backgroundInfo.previousTab == 0):
         platform.config(background = "white")
         platform.minsize(525,350)
         platform.maxsize(525,350)
-        if(backgroundInfo.twitchActive == True):
+        if(backgroundInfo.twitchActive == True and backgroundInfo.youtubeActive == True):
+            webText = Label(platform, text="Enter Your Youtube Channel ID",
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+            webURL = Label(platform, text="Enter Your Youtube Stream URL",
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+            username = Entry(platform, text = "Channel ID..", width = 53)
+            youtubeURL = Entry(platform, text = "Channel URL..", width = 53)
+            username.place(x=25, y=50)
+            webText.place(x=5, y=20)
+            webURL.place(x=5, y=80)
+            youtubeURL.place(x=25, y=110)
+
+
+            webText = Label(platform, text="Enter Your Twitch Username",
+                    bg = "white",
+                    fg = "black",
+                    font = ("Arial", 10))
+            username = Entry(platform, text = "Username..", width = 53)
+            username.place(x=25, y=170)
+            webText.place(x=5, y=140)
+
+        if(backgroundInfo.twitchActive == True and backgroundInfo.youtubeActive == False):
             webText = Label(platform, text="Enter Your Twitch Username",
                     bg = "white",
                     fg = "black",
@@ -2302,7 +2699,7 @@ while(backgroundInfo.previousTab == 0):
             username = Entry(platform, text = "Username..", width = 53)
             username.place(x=25, y=50)
             webText.place(x=5, y=20)
-        if(backgroundInfo.youtubeActive == True):
+        if(backgroundInfo.youtubeActive == True and backgroundInfo.twitchActive == False):
             webText = Label(platform, text="Enter Your Channel ID",
                     bg = "white",
                     fg = "black",
@@ -2445,17 +2842,23 @@ while(backgroundInfo.previousTab == 0):
                 endButton.place(x=275, y = 280)
 
                 if(backgroundInfo.gamesetting == 0):
+                    shiftButton = Button(start, text="Shift", height=1, width=5, state=DISABLED)
+                    shiftButton.place(x=20, y=145)
+
+                    controlButton = Button(start, text="Control", height=1, width=6, state=DISABLED)
+                    controlButton.place(x=20, y=175)
+
                     upButton = Button(start, text="Up", height=1, width=4, state=DISABLED)
                     DownButton = Button(start, text="Down", height=1, width=4, state=DISABLED)
                     LeftButton = Button(start, text="Left", height=1, width=4, state=DISABLED)
                     RightButton = Button(start, text="Right", height=1, width=4, state=DISABLED)
-                    upButton.place(x=60, y=145)
-                    DownButton.place(x=60, y=175)
-                    LeftButton.place(x=20, y=175)
-                    RightButton.place(x=100, y=175)
+                    upButton.place(x=115, y=145)
+                    DownButton.place(x=115, y=175)
+                    LeftButton.place(x=75, y=175)
+                    RightButton.place(x=155, y=175)
 
                     secHandButton = Button(start, text="Swap", height=1, width=4, state=DISABLED)
-                    secHandButton.place(x=160, y=110)
+                    secHandButton.place(x=215, y=110)
 
                     oneButton = Button(start, text="1", height=1, width=3, state=DISABLED)
                     twoButton = Button(start, text="2", height=1, width=3, state=DISABLED)
@@ -2477,16 +2880,13 @@ while(backgroundInfo.previousTab == 0):
                     nineButton.place(x=340, y=50)
 
                     spaceButton = Button(start, text="Space Bar", height=1, width=20, state=DISABLED)
-                    spaceButton.place(x=160, y=175)
-
-                    shiftButton = Button(start, text="Shift", height=1, width=5, state=DISABLED)
-                    shiftButton.place(x=327, y=175)
+                    spaceButton.place(x=221, y=175)
 
                     dropButton = Button(start, text="Drop", height=1, width=4, state=DISABLED)
-                    dropButton.place(x=20, y=110)
+                    dropButton.place(x=75, y=110)
 
                     InvButton = Button(start, text="Inv", height=1, width=4, state=DISABLED)
-                    InvButton.place(x=100, y=110)
+                    InvButton.place(x=155, y=110)
 
                     mousePalmButton = Button(start, text="", height=2, width=5, state=DISABLED)
                     mouseLeftButton = Button(start, text="L", height=1, width=2, state=DISABLED)
@@ -2509,8 +2909,11 @@ while(backgroundInfo.previousTab == 0):
                     start.maxsize(600, 350)
                     controlManager = ControlManage()
                     controlFunction = partial(controlManager.controlOption, start)
+                    mouseManager = MouseManage()
+                    mouseFunction = partial(mouseManager.mouseOption, start)
 
-                    options.add_command(label='Controls', command= controlFunction)
+                    options.add_command(label='Keyboard', command= controlFunction)
+                    options.add_command(label='Mouse', command= mouseFunction)
 
                     upButton = Button(start, text="Up", height=1, width=4, state=DISABLED)
                     downButton = Button(start, text="Down", height=1, width=4, state=DISABLED)
