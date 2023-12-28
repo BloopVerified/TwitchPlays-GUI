@@ -15,6 +15,10 @@ from mttkinter import *
 from screeninfo import get_monitors, Monitor
 import TwitchPlays_Connection
 
+
+
+
+
 class MouseManage():
     mimicMouseBox = ''
     moveMouseUp = 45
@@ -1880,6 +1884,16 @@ class backgroundInfo():
         backgroundInfo.previousTab = 3
         game.destroy()
 
+    def heartboundSetting(self):
+        backgroundInfo.gamesetting = 1
+        backgroundInfo.previousTab = 3
+        game.destroy()
+
+    def knuckleSandwichSetting(self):
+        backgroundInfo.gamesetting = 14
+        backgroundInfo.previousTab = 3
+        game.destroy()
+
     def customSetting(self):
         backgroundInfo.gamesetting = 99
         backgroundInfo.previousTab = 3
@@ -2212,6 +2226,150 @@ class TextToAction():
                     mouse.release("left")
                     mouseLeftButton['bg'] = '#f0f0f0'
                 elif(msg.lower() == 'place' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseRightButton['bg'] = 'red'
+                    mouse.press("right")
+                    mouse.release("right")
+                    time.sleep(1)
+                    mouseRightButton['bg'] = '#f0f0f0'
+
+            if(backgroundInfo.gamesetting == 1 and backgroundInfo.previousTab == 3):
+                if(msg.lower() == 'right' and ((int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) or (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry))):
+                    RightButton['bg'] = 'red'
+                    keyboard.press("d")
+                    time.sleep(1)
+                    keyboard.release("d")
+                    RightButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'left' and ((int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) or (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry))):
+                    LeftButton['bg'] = 'red'
+                    keyboard.press("a")
+                    time.sleep(1)
+                    keyboard.release("a")
+                    LeftButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'forward' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    upButton['bg'] = 'red'
+                    keyboard.press("w")
+                    time.sleep(1)
+                    keyboard.release("w")
+                    upButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'back' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    DownButton['bg'] = 'red'
+                    keyboard.press("s")
+                    time.sleep(1)
+                    keyboard.release("s")
+                    DownButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'accept' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    acceptButton['bg'] = 'red'
+                    keyboard.press("z")
+                    keyboard.release("z")
+                    time.sleep(1)
+                    acceptButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'skip' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    skipButton['bg'] = 'red'
+                    keyboard.press("x")
+                    keyboard.release("x")
+                    time.sleep(1)
+                    skipButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'mr' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseMoveRightButton['bg'] = 'red'
+                    mouse.move(45, 0, False, .1)
+                    mouseMoveRightButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'ml' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseMoveLeftButton['bg'] = 'red'
+                    mouse.move(-45, 0, False, .1)
+                    mouseMoveLeftButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'mu' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseMoveUpButton['bg'] = 'red'
+                    mouse.move(0, -45, False, .1)
+                    mouseMoveUpButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'md'and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseMoveDownButton['bg'] = 'red'
+                    mouse.move(0, 45, False, .1)
+                    mouseMoveDownButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'lc' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseLeftButton['bg'] = 'red'
+                    mouse.press("left")
+                    mouse.release("left")
+                    time.sleep(1)
+                    mouseLeftButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'rc' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseRightButton['bg'] = 'red'
+                    mouse.press("right")
+                    mouse.release("right")
+                    time.sleep(1)
+                    mouseRightButton['bg'] = '#f0f0f0'
+
+            if(backgroundInfo.gamesetting == 1 and backgroundInfo.previousTab == 14):
+                if(msg.lower() == 'right' and ((int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) or (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry))):
+                    RightButton['bg'] = 'red'
+                    keyboard.press("right")
+                    time.sleep(1)
+                    keyboard.release("right")
+                    RightButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'left' and ((int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) or (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry))):
+                    LeftButton['bg'] = 'red'
+                    keyboard.press("left")
+                    time.sleep(1)
+                    keyboard.release("left")
+                    LeftButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'up' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    upButton['bg'] = 'red'
+                    keyboard.press("up")
+                    time.sleep(1)
+                    keyboard.release("up")
+                    upButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'back' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    DownButton['bg'] = 'red'
+                    keyboard.press("down")
+                    time.sleep(1)
+                    keyboard.release("down")
+                    DownButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'x' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    confirmButton['bg'] = 'red'
+                    keyboard.press("x")
+                    keyboard.release("x")
+                    time.sleep(1)
+                    confirmButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'c' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    cancelButton['bg'] = 'red'
+                    keyboard.press("c")
+                    keyboard.release("c")
+                    time.sleep(1)
+                    cancelButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'b' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    miscButton['bg'] = 'red'
+                    keyboard.press("b")
+                    keyboard.release("b")
+                    time.sleep(1)
+                    miscButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'space' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    spaceButton['bg'] = 'red'
+                    keyboard.press("space")
+                    keyboard.release("space")
+                    time.sleep(1)
+                    spaceButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'mr' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseMoveRightButton['bg'] = 'red'
+                    mouse.move(45, 0, False, .1)
+                    mouseMoveRightButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'ml' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseMoveLeftButton['bg'] = 'red'
+                    mouse.move(-45, 0, False, .1)
+                    mouseMoveLeftButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'mu' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseMoveUpButton['bg'] = 'red'
+                    mouse.move(0, -45, False, .1)
+                    mouseMoveUpButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'md'and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseMoveDownButton['bg'] = 'red'
+                    mouse.move(0, 45, False, .1)
+                    mouseMoveDownButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'lc' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                    mouseLeftButton['bg'] = 'red'
+                    mouse.press("left")
+                    mouse.release("left")
+                    time.sleep(1)
+                    mouseLeftButton['bg'] = '#f0f0f0'
+                elif(msg.lower() == 'rc' and (int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     mouseRightButton['bg'] = 'red'
                     mouse.press("right")
                     mouse.release("right")
@@ -2615,6 +2773,8 @@ sendStartClose = sendInfo.start_close_window
 sendUpdateMessage = sendInfo.updateMessage
 greenScreenMode = GreenScreen()
 GSMode = greenScreenMode.greenScreenChange
+sendHeartBoundSetting = sendInfo.heartboundSetting
+sendKnuckleSandwichSetting = sendInfo.knuckleSandwichSetting
 while(backgroundInfo.previousTab == 0):
     web = mtTkinter.Tk()
     web.lift()
@@ -2740,49 +2900,49 @@ while(backgroundInfo.previousTab == 0):
                     font = ("Arial", 15))
             webText.place(x=175, y=50)
 
-            minecraftButton = Button(game, text="Minecraft",height = 2, width = 7, command = sendMinecraftSetting)
+            minecraftButton = Button(game, text="Minecraft",height = 2, width = 9, command = sendMinecraftSetting)
             minecraftButton.place(x=75, y = 100)
 
-            gameTwoButton = Button(game, text="Game 2",height = 2, width = 7, command = None)
+            gameTwoButton = Button(game, text="HeartBound",height = 2, width = 9, command = sendHeartBoundSetting)
             gameTwoButton.place(x=150, y = 100)
 
-            gameThreeButton = Button(game, text="Game 3",height = 2, width = 7, command = None)
+            gameThreeButton = Button(game, text="Game 3",height = 2, width = 9, command = None)
             gameThreeButton.place(x=225, y = 100)
 
-            gameFourButton = Button(game, text="Game 4",height = 2, width = 7, command = None)
+            gameFourButton = Button(game, text="Game 4",height = 2, width = 9, command = None)
             gameFourButton.place(x=300, y = 100)
 
-            gameFiveButton = Button(game, text="Game 5",height = 2, width = 7, command = None)
+            gameFiveButton = Button(game, text="Game 5",height = 2, width = 9, command = None)
             gameFiveButton.place(x=375, y = 100)
 
-            gameSixButton = Button(game, text="Game 6",height = 2, width = 7, command = None)
+            gameSixButton = Button(game, text="Game 6",height = 2, width = 9, command = None)
             gameSixButton.place(x=75, y = 150)
 
-            gameSevenButton = Button(game, text="Game 7",height = 2, width = 7, command = None)
+            gameSevenButton = Button(game, text="Game 7",height = 2, width = 9, command = None)
             gameSevenButton.place(x=150, y = 150)
 
-            gameEightButton = Button(game, text="Game 8",height = 2, width = 7, command = None)
+            gameEightButton = Button(game, text="Game 8",height = 2, width = 9, command = None)
             gameEightButton.place(x=225, y = 150)
 
-            gameNineButton = Button(game, text="Game 9",height = 2, width = 7, command = None)
+            gameNineButton = Button(game, text="Game 9",height = 2, width = 9, command = None)
             gameNineButton.place(x=300, y = 150)
 
-            gameTenButton = Button(game, text="Game 10",height = 2, width = 7, command = None)
+            gameTenButton = Button(game, text="Game 10",height = 2, width = 9, command = None)
             gameTenButton.place(x=375, y = 150)
 
-            gameElevenButton = Button(game, text="Game 11",height = 2, width = 7, command = None)
+            gameElevenButton = Button(game, text="Game 11",height = 2, width = 9, command = None)
             gameElevenButton.place(x=75, y = 200)
 
-            gameTwelveButton = Button(game, text="Game 12",height = 2, width = 7, command = None)
+            gameTwelveButton = Button(game, text="Game 12",height = 2, width = 9, command = None)
             gameTwelveButton.place(x=150, y = 200)
 
-            gameThirteenButton = Button(game, text="Game 13",height = 2, width = 7, command = None)
+            gameThirteenButton = Button(game, text="Game 13",height = 2, width = 9, command = None)
             gameThirteenButton.place(x=225, y = 200)
 
-            gameFourteenButton = Button(game, text="Game 14",height = 2, width = 7, command = None)
+            gameFourteenButton = Button(game, text="Knuckle Sandwich",height = 2, width = 9,wraplength=52, command = sendKnuckleSandwichSetting)
             gameFourteenButton.place(x=300, y = 200)
 
-            customButton = Button(game, text="Custom",height = 2, width = 7, command = sendCustomSetting)
+            customButton = Button(game, text="Custom",height = 2, width = 9, command = sendCustomSetting)
             customButton.place(x=375, y = 200)
 
             backButton = Button(game, text="Back",height = 2, width = 5, command = sendBackTrackPlatform)
@@ -2903,6 +3063,77 @@ while(backgroundInfo.previousTab == 0):
                     mouseMoveDownButton.place(x=445, y=170)
                     mouseMoveLeftButton.place(x=405, y=120)
                     mouseMoveRightButton.place(x=480, y=120)
+
+                if(backgroundInfo.gamesetting == 1):
+                    upButton = Button(start, text="Up", height=1, width=4, state=DISABLED)
+                    DownButton = Button(start, text="Down", height=1, width=4, state=DISABLED)
+                    LeftButton = Button(start, text="Left", height=1, width=4, state=DISABLED)
+                    RightButton = Button(start, text="Right", height=1, width=4, state=DISABLED)
+                    upButton.place(x=115, y=145)
+                    DownButton.place(x=115, y=175)
+                    LeftButton.place(x=75, y=175)
+                    RightButton.place(x=155, y=175)
+
+                    acceptButton = Button(start, text="z", height=1, width=4, state=DISABLED)
+                    acceptButton.place(x=75, y=110)
+
+                    skipButton = Button(start, text="x", height=1, width=4, state=DISABLED)
+                    skipButton.place(x=155, y=110)
+
+                    mousePalmButton = Button(start, text="", height=2, width=5, state=DISABLED)
+                    mouseLeftButton = Button(start, text="L", height=1, width=2, state=DISABLED)
+                    mouseRightButton = Button(start, text="R", height=1, width=2, state=DISABLED)
+                    mousePalmButton.place(x=430, y=125)
+                    mouseLeftButton.place(x=430, y=100)
+                    mouseRightButton.place(x=451, y=100)
+
+                    mouseMoveUpButton = Button(start, text="↑", height=1, width=1, state=DISABLED)
+                    mouseMoveDownButton = Button(start, text="↓", height=1, width=1, state=DISABLED)
+                    mouseMoveLeftButton = Button(start, text="←", height=1, width=1, state=DISABLED)
+                    mouseMoveRightButton = Button(start, text="→", height=1, width=1, state=DISABLED)
+                    mouseMoveUpButton.place(x=445, y=70)
+                    mouseMoveDownButton.place(x=445, y=170)
+                    mouseMoveLeftButton.place(x=405, y=120)
+                    mouseMoveRightButton.place(x=480, y=120)
+
+                if (backgroundInfo.gamesetting == 14):
+                    upButton = Button(start, text="Up", height=1, width=4, state=DISABLED)
+                    DownButton = Button(start, text="Down", height=1, width=4, state=DISABLED)
+                    LeftButton = Button(start, text="Left", height=1, width=4, state=DISABLED)
+                    RightButton = Button(start, text="Right", height=1, width=4, state=DISABLED)
+                    upButton.place(x=115, y=145)
+                    DownButton.place(x=115, y=175)
+                    LeftButton.place(x=75, y=175)
+                    RightButton.place(x=155, y=175)
+
+                    confirmButton = Button(start, text="x", height=1, width=4, state=DISABLED)
+                    confirmButton.place(x=75, y=110)
+
+                    cancelButton = Button(start, text="c", height=1, width=4, state=DISABLED)
+                    cancelButton.place(x=115, y=110)
+
+                    miscButton = Button(start, text="b", height=1, width=4, state=DISABLED)
+                    miscButton.place(x=155, y=110)
+
+                    spaceButton = Button(start, text="Space", height=1, width=20, state=DISABLED)
+                    spaceButton.place(x=221, y=175)
+
+                    mousePalmButton = Button(start, text="", height=2, width=5, state=DISABLED)
+                    mouseLeftButton = Button(start, text="L", height=1, width=2, state=DISABLED)
+                    mouseRightButton = Button(start, text="R", height=1, width=2, state=DISABLED)
+                    mousePalmButton.place(x=430, y=125)
+                    mouseLeftButton.place(x=430, y=100)
+                    mouseRightButton.place(x=451, y=100)
+
+                    mouseMoveUpButton = Button(start, text="↑", height=1, width=1, state=DISABLED)
+                    mouseMoveDownButton = Button(start, text="↓", height=1, width=1, state=DISABLED)
+                    mouseMoveLeftButton = Button(start, text="←", height=1, width=1, state=DISABLED)
+                    mouseMoveRightButton = Button(start, text="→", height=1, width=1, state=DISABLED)
+                    mouseMoveUpButton.place(x=445, y=70)
+                    mouseMoveDownButton.place(x=445, y=170)
+                    mouseMoveLeftButton.place(x=405, y=120)
+                    mouseMoveRightButton.place(x=480, y=120)
+
 
                 if(backgroundInfo.gamesetting == 99):
                     start.minsize(600, 350)
