@@ -39,4 +39,4 @@ This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDark
 
 ### If you have any requests, feel free to comment, or commit some changes I will review/test it. Any outside questions about the code feel free to message me at @BloopCasual on Discord. (Please mention the code so I don't discard your message for spam.)
 
-# As of 1/8/2024 I am reworking the code so circulation issues are being resolved with upcoming updates.  
+#### As of 1/8/2024 I am reworking the code so circulation issues are being resolved with upcoming updates.  
