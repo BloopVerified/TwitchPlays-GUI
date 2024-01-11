@@ -1,3 +1,5 @@
+#### As of 1/11/2024 I am reworking the code so circulation issues are being resolved with upcoming updates.  
+
 # TwitchPlays GUI
 These are the two Python files I use that allows Twitch Chat or Youtube Chat to control your keyboard or mouse to play a game. You are welcome to use or adapt this code for your content (Please credit all programmers if you plan to use this as a base for your own project.)
 
@@ -38,5 +40,3 @@ This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDark
 - Live Controller View for all game   
 
 ### If you have any requests, feel free to comment, or commit some changes I will review/test it. Any outside questions about the code feel free to message me at @BloopCasual on Discord. (Please mention the code so I don't discard your message for spam.)
-
-#### As of 1/8/2024 I am reworking the code so circulation issues are being resolved with upcoming updates.  
