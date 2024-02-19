@@ -38,5 +38,8 @@ This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDark
 - Pause Control Feature  
 - More Games Options!!!   
 - Live Controller View for all game   
+- Youtube vs Twitch Mode   
+- Random View vs Streamer   
+
 
 ### If you have any requests, feel free to comment, or commit some changes I will review/test it. Any outside questions about the code feel free to message me at @BloopCasual on Discord. (Please mention the code so I don't discard your message for spam.)
