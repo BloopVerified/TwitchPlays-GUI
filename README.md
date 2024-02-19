@@ -1,4 +1,4 @@
-#### As of 1/29/2024 I have fixed the circulation issues and now fixing small bugs. Will be releasing the fixed version in a few days!  
+#### As of 2/19/2024 I am final testing the fixes and will upload the new files soon!  
 
 # TwitchPlays GUI
 These are the two Python files I use that allows Twitch Chat or Youtube Chat to control your keyboard or mouse to play a game. You are welcome to use or adapt this code for your content (Please credit all programmers if you plan to use this as a base for your own project.)
