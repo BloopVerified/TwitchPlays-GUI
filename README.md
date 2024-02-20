@@ -1,4 +1,3 @@
-#### As of 2/19/2024 I am final testing the fixes and will upload the new files soon!  
 
 # TwitchPlays GUI
 These are the two Python files I use that allows Twitch Chat or Youtube Chat to control your keyboard or mouse to play a game. You are welcome to use or adapt this code for your content (Please credit all programmers if you plan to use this as a base for your own project.)
@@ -20,6 +19,7 @@ Once Python is set up, all you need to do is boot up the program and follow the 
 This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDarknut, Ottomated, and the original Twitch/Youtube Plays coder Wituz. I decided to expand this program further to allow people with little coding knowledge to have pre-set and custom options with a basic but decent GUI.
 
 ## Recent Features  
+- (Update: 02-19-24) Fixes for Overall Program  
 - (Update: 01-08-24) Code Update & More Games  
 - (Update: 12-27-23) Duel Casting for Youtube and Twitch  
 - (Update: 12-25-23) Custom Controller Settings & No More Globals & Green Screen Mode  
@@ -39,7 +39,7 @@ This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDark
 - More Games Options!!!   
 - Live Controller View for all game   
 - Youtube vs Twitch Mode   
-- Random View vs Streamer   
+- Random Viewer vs Streamer   
 
 
 ### If you have any requests, feel free to comment, or commit some changes I will review/test it. Any outside questions about the code feel free to message me at @BloopCasual on Discord. (Please mention the code so I don't discard your message for spam.)
