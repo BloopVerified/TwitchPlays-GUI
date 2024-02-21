@@ -908,6 +908,31 @@ class TextToAction():
             ####################################
             ####################################
 
+            positionCheck = str(mouse.get_position())
+            positionCheck = positionCheck.replace("(", "")
+            positionCheck = positionCheck.replace(")", "")
+            positionCheck = positionCheck.split(", ")
+            positionXCheck = positionCheck[0]
+            positionYCheck = positionCheck[1]
+
+
+
+            if((int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
+                if (int(positionXCheck) > ScreenXEndEntry):
+                    moveMouseBack = (int(positionXCheck) - ScreenXEndEntry)+2
+                    mouse.move(-int(moveMouseBack), 0, False, 0) #left
+                elif (int(positionXCheck) < ScreenXStartEntry):
+                    moveMouseBack = (ScreenXStartEntry - int(positionXCheck))+2
+                    mouse.move((moveMouseBack), 0, False, 0)  #right
+
+                if (int(positionYCheck) > ScreenYEndEntry):
+                    moveMouseBack = (int(positionYCheck) - ScreenYEndEntry)+2
+                    mouse.move(0, -int(moveMouseBack), False, 0) #Up
+                elif (int(positionYCheck) < ScreenYStartEntry):
+                    moveMouseBack = (ScreenYStartEntry - int(positionYCheck))+2
+                    mouse.move(0, (moveMouseBack), False, 0)  #Down
+
+
         except Exception as e:
             print("Encountered exception: " + str(e))
 
