@@ -38,7 +38,8 @@ This is a forked version of the expanded Twitch/Youtube Plays by DougDoug, DDark
 ## Future Feature Coming Soon  
 - Pause Control Feature  
 - More Games Options!!!   
-- Live Controller View for all game
+- Live Controller View for all game  
+- Better Screen Border Settings  
 - Upgrade Basic Macro to Macro Recorder  
 - Youtube vs Twitch Mode   
 - Random Viewer vs Streamer   
