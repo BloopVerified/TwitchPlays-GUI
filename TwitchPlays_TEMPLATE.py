@@ -215,12 +215,12 @@ class TextToAction():
                 elif (msg.lower() == 'controlon' and (
                         int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (
                               int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
-                    pydirectinput.keyDown('control')
+                    pydirectinput.keyDown('ctrl')
                     controlButton['bg'] = 'red'
                 elif (msg.lower() == 'controloff' and (
                         int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (
                               int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
-                    pydirectinput.keyUp('control')
+                    pydirectinput.keyUp('ctrl')
                     controlButton['bg'] = '#f0f0f0'
 
                 elif (msg.lower() == '1' and (
@@ -356,15 +356,15 @@ class TextToAction():
                               int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     mouseLeftButton['bg'] = 'red'
                     mouse.press("left")
+                    time.sleep(2)
                     mouse.release("left")
-                    time.sleep(1)
                     mouseLeftButton['bg'] = '#f0f0f0'
                 elif (msg.lower() == 'lmine' and (
                         int(positionX) <= ScreenXEndEntry and int(positionX) >= ScreenXStartEntry) and (
                               int(positionY) <= ScreenYEndEntry and int(positionY) >= ScreenYStartEntry)):
                     mouseLeftButton['bg'] = 'red'
                     mouse.press("left")
-                    time.sleep(3)
+                    time.sleep(4)
                     mouse.release("left")
                     mouseLeftButton['bg'] = '#f0f0f0'
                 elif (msg.lower() == 'place' and (
